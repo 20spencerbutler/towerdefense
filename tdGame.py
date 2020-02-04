@@ -1,7 +1,11 @@
 import pygame
 
+def isBounded(low, val, hi,):
+    return val >= low and val <= hi
+
 class Game():
-    def __init__(self, mapUse, startingLives, startingMoney):
+    def __init__(self, mapUse, startingLives, startingMoney, shopDefault):
+        self.menuBoundary = 800
         self.money = startingMoney
         self.lives = startingLives
         self.map = mapUse
@@ -10,7 +14,9 @@ class Game():
         self.enemies = pygame.sprite.Group()
         self.projectiles = pygame.sprite.Group()
         self.display = pygame.Surface(1000, 1000)
-        self.display.blit(pygame.transform.scale(self.map.getSurface(), 800, 800), (0, 0))
+        self.display.blit(pygame.transform.scale(self.map.getSurface(), self.menuBoundary, self.menuBoundary), (0, 0))
+        self.shopNormal = shopDefault
+        self.shop = self.shopNormal
 
     def gameTick(self):
         dispNow = pygame.Surface(1000, 1000)
@@ -25,7 +31,7 @@ class Game():
                 enemiesInRange = pygame.sprite.spritecollide(rangeSprite, self.enemies,
                                                              False, pygame.sprite.collide_circle()
                                                              ).sprites()
-            retNow = self.towers[tower].update(enemiesInRange)
+            retNow = self.towers[tower].update(enemiesInRange, False)
             self.towerCanFire[tower] = retNow['canFire']
             if retNow['shotFired']:
                 self.projectiles.add(retNow['shotFired'])
@@ -48,7 +54,24 @@ class Game():
                 dispNow.blit(projectile.appearance, (projectile.rect[0], projectile.rect[1]))
 
 
+
         return dispNow
+
+    def handleClick(self, position):
+        x, y = position[0], position[1]
+        for tower in self.towers:
+            if isBounded(tower.position[0], x, tower.position[0] + 50) and isBounded(tower.position[1], y, tower.position[1] + 50):
+                self.shop = tower.shop
+                return
+
+        if isBounded(self.menuBoundary, x, self.display.get_width()):
+            buttonClicked = self.shop.click((x - self.menuBoundary, y))
+            if buttonClicked:
+                type = buttonClicked.onClick()
+                if not type:
+                    return
+                
+
 
 
 
