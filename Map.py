@@ -1,6 +1,4 @@
-import pygame, sys, random, time
-from pygame.locals import *
-from pygame.font import *
+import pygame
 
 class Map():
     def __init__(self, _tileMap, _nodes):
@@ -28,8 +26,8 @@ class Map():
                 if y == "B":
                     windows = pygame.image.load('Tiles/B.png')
                     self.display.blit(windows, [drawY, drawX])
-                drawY += 30
-            drawX += 30
+                drawY += tileSize
+            drawX += tileSize
 
     def getSurface(self):
         return self.display

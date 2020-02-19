@@ -55,4 +55,4 @@ class Projectile():
             partialSum += math.pow(i, 2)
 
         magnitude = math.sqrt(partialSum)
-        return (vectorToMag[0]/magnitude), (vectorToMag[1]/magnitude)
+        return ((vectorToMag[0]/magnitude), (vectorToMag[1]/magnitude))
