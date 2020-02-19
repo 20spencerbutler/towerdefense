@@ -1,7 +1,10 @@
-import pygame
+import pygame, re
 from Map import Map
 from Projectile import Projectile
 from Tower import Tower
+
+
+aNumber = re.compile(r'\d+')
 
 towerProps = (
     {
@@ -15,6 +18,15 @@ towerProps = (
             'effects': False
         },
         'shop': False
+    }
+)
+
+enemyProps = (
+    {
+        'appearance': pygame.image.load('Tiles/B.png'),
+        'animTime': 0,
+        'speed': 10,
+        'hp': 10
     }
 )
 
@@ -56,6 +68,15 @@ class Game():
         self.towerShopOpen = -1
         self.buyingTower = False
         self.printer = writerMine('')
+        rawNodes = self.map.nodes
+        self.useNodes = []
+        for i in rawNodes:
+            vals = aNumber.findall(i)
+            if len(vals) < 2:
+                next()
+            self.useNodes.append((vals[0], vals[1]))
+
+
 
     def bottomMenu(self, hoverSurface = False):
         menuSurf = pygame.Surface(1000 - self.menuBoundary, self.menuBoundary)
@@ -94,9 +115,13 @@ class Game():
 
         for projectile in self.projectiles:
             projectile.update()
-            enemyHit = pygame.sprite.spritecollideany(projectile, self.enemies)
+            enemyHit = pygame.sprite.spritecollide(projectile, self.enemies)
             if enemyHit:
                 enemyHit[0].takeDamage(projectile.damage, projectile.effects)
+                if('aoe' in projectile.effects):
+                    for a in range(1, len(enemyHit)):
+                        enemyHit[a].takeDamage(projectile.damage, projectile.effects)
+
                 self.projectiles.remove(projectile)
             else:
                 dispNow.blit(projectile.appearance, (projectile.rect[0], projectile.rect[1]))
@@ -164,14 +189,6 @@ class Game():
                   Projectile(loc[0], loc[1], t['damage'], t['appearance'], t['speed'], t['effects']),
                   (loc[0], loc[1]), s['shop']))
 
-
-
-
-
-
-
-
-
-
-
+    def spawnEnemy(self, enemyIndex):
+        self.enemies.add()
 
