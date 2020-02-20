@@ -1,4 +1,4 @@
-import pygame, re
+import pygame, re, random
 from Map import Map
 from Projectile import Projectile
 from Tower import Tower
@@ -77,7 +77,6 @@ class Game():
             self.useNodes.append((vals[0], vals[1]))
 
 
-
     def bottomMenu(self, hoverSurface = False):
         menuSurf = pygame.Surface(1000 - self.menuBoundary, self.menuBoundary)
         menuSurf.blit(self.printer.write(self.money, 20), (50, 50))
@@ -139,6 +138,9 @@ class Game():
             if(buttonHovered):
                 currentHoverSurface = buttonHovered.description
         dispNow.blit(self.bottomMenu(currentHoverSurface), (0, self.menuBoundary))
+        inter = random.randint(0, 10)
+        if inter == 0:
+            self.spawnEnemy(0)
 
         return dispNow
 
@@ -165,9 +167,6 @@ class Game():
                 if type[0] == 'upgrade':
                     self.towers[self.towerShopOpen].upgrade()
 
-                # _range, _appearance, _fireRate, _projectile, _location , _shop
-                # (self, _posX, _posY, _damage, _appearance, _movementSpeed, _effects):
-
                 if type[0] == 'buyTower':
                     s = towerProps[type[1]]
                     self.buyingTower = True
@@ -189,6 +188,7 @@ class Game():
                   Projectile(loc[0], loc[1], t['damage'], t['appearance'], t['speed'], t['effects']),
                   (loc[0], loc[1]), s['shop']))
 
-    def spawnEnemy(self, enemyIndex):
-        self.enemies.add()
+    def spawnEnemy(self, eI):
+        en = enemyProps[eI]
+        self.enemies.add(en['appearance'], en['animTime'], en['speed'], en['hp'], (self.useNodes[0][0], self.useNodes[0][1]), self.useNodes)
 
