@@ -66,6 +66,9 @@ class ShopButton():
 
     def getIcon(self):
         return self.icon
+    
+    def getType(self):
+        return self.type
 
 def makeText(text, color, bgcolor, top, left, font):
     textSurf = font.render(text, True, color, bgcolor)
