@@ -37,8 +37,7 @@ class ShopButton():
             self.display.blit(textSurfUpgrade, textRectUpgrade)
 
         iconFont = pygame.font.Font('freesansbold.ttf', 10)
-        self.icon.fill(GRAY)
-        pygame.draw.circle(self.icon, BLACK, (30, 30), 30)
+        self.icon.fill(BLACK)
         self.iconName = []
         start = 0
         for i in range (len(self.name)):
