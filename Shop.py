@@ -58,25 +58,18 @@ class Shop():
                 self.otherButtonsPos.append(coordinate)
 
     def click(self, coordinates):
+        i = 0
         for x in self.mainButtonsPos:
             if coordinates[0] >= x[0] and coordinates[0] < x[0] + 60 and coordinates[1] >= x[1] and coordinates[1] < x[1] + 60:
-                return self.mainButtons[x]
+                return self.mainButtons[i]
+            i += 1
+        j = 0
         for y in self.otherButtonsPos:
-            if coordinates[0] >= y[0] and coordiantes[0] < y[0] + 60 and coordinates[1] >= y[1] and coordinates[1] < y[1] + 60:
-                return self.otherButtons[y]
+            if coordinates[0] >= y[0] and coordinates[0] < y[0] + 60 and coordinates[1] >= y[1] and coordinates[1] < y[1] + 60:
+                return self.otherButtons[j]
+            j += 1
         return False
 
     def getSurface(self):
         return self.surface
-
-buttonOne = ShopButton(255, "Blaster", "The blaster blasts things.", ["Buy", "Attack Tower"])
-buttonTwo = ShopButton(255, "Gun", "The gun shoots things.", ["Buy", "Attack Tower"])
-buttonThree = ShopButton(255, "Upgrade Blaster", "This upgrades the blaster.", ["Upgrade", "Tower Upgrade"])
-buttonFour = ShopButton(255, "Upgrade Gun", "This upgrades the gun.", ["Upgrade", "Tower Upgrade"])
-buttonFive = ShopButton(255, "Sell Blaster", "This sells the blaster.", ["Sell", "Tower Sell"])
-buttonSix = ShopButton(255, "Sell Gun", "This sells the gun.", ["Sell", "Tower Sell"])
-buttons = [buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive, buttonSix]
-winco = Shop(buttons)
-print(winco.click((40, 10)))
-print(winco.click((40, 200)))
 
