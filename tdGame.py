@@ -1,29 +1,41 @@
 import pygame, re, random
 from Map import Map
 from Projectile import Projectile
+from Shop import Shop
+from ShopButton import ShopButton
 from Tower import Tower
 
 
 aNumber = re.compile(r'\d+')
 
+basicTowerShop = Shop([
+    ShopButton(0, 'Sell', 'Sells Tower', ('Sell')),
+    ShopButton(0, 'Target First', 'Targets First Enemy', ('retarget', 0)),
+    ShopButton(0, 'Target Last', 'Targets Last Enemy', ('retarget', 1)),
+    ShopButton(0, 'Target Closest', 'Targets Closest Enemy', ('retarget', 2))
+])
+
 towerProps = (
     {
+        'cost': 20,
+        'name': 'Tower Chungus',
+        'desc': 'Chungus Tower',
         'range': 100,
-        'appearance': pygame.image.load('Tiles/A.png'),
+        'appearance': pygame.image.load('Tiles/firsttower.png'),
         'fireRate': 20,
         'projectile': {
             'damage': 10,
-            'appearance': [pygame.image.load('Tiles/B.png')],
+            'appearance': [pygame.image.load('Tiles/hadouken.png')],
             'speed': 30,
             'effects': False
         },
-        'shop': False
+        'shop': basicTowerShop
     }
 )
 
 enemyProps = (
     {
-        'appearance': pygame.image.load('Tiles/B.png'),
+        'appearance': pygame.image.load('Tiles/spidersprite.png'),
         'animTime': 0,
         'speed': 10,
         'hp': 10
@@ -158,7 +170,7 @@ class Game():
                 type = buttonClicked.onClick()
                 if not type:
                     return
-                if type[0] == 'sell':
+                if type[0] == 'Sell':
                     self.towers.pop(self.towerShopOpen)
                     self.shop = self.shopNormal
                     self.towerShopOpen = -1
@@ -167,7 +179,7 @@ class Game():
                 if type[0] == 'upgrade':
                     self.towers[self.towerShopOpen].upgrade()
 
-                if type[0] == 'buyTower':
+                if type[0] == 'Buy':
                     s = towerProps[type[1]]
                     self.buyingTower = True
                     self.rangeOfBuying = s['range']
