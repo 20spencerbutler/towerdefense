@@ -1,5 +1,6 @@
 from pygame import *
 from pygame.sprite import *
+from Map import Map
 
 # Color setup
 BLACK = (0, 0, 0)
@@ -34,10 +35,10 @@ class Menu():
         self.mapArr = []
         self.nodeArr = []
 
-        map1 = open("BloonsMapOne.txt")
+        map1 = "BloonsMapOne.txt"
         self.mapArr.append(map1)
 
-        nodes1 = open("BloonsNodesOne.txt")
+        nodes1 = "BloonsNodesOne.txt"
         self.nodeArr.append(nodes1)
 
         counter = 0
@@ -45,7 +46,8 @@ class Menu():
         for a in range(0, 3):
             for b in range(0, 4):
                 if counter < counter_limit:
-                    miniMap = Map.__init__(self, self.mapArr[counter], self.nodeArr[counter])
+                    print(self.mapArr[counter], '//////////')
+                    miniMap = Map(self.mapArr[counter], self.nodeArr[counter])
                     miniMapSurf = miniMap.getSurface()
                     miniMapSurfResized = pygame.transform.scale(miniMapSurf, (200, 200))
                     display.blit(miniMapSurfResized, (10 + (b * 200), 10 + (a * 200), 200, 200))

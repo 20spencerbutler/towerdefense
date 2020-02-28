@@ -2,6 +2,7 @@ import pygame
 
 class Map():
     def __init__(self, _tileMap, _nodes):
+        print(_tileMap, '---------------')
         with open(_tileMap) as mapOne: 
             linesOne = [line.split() for line in mapOne]
         

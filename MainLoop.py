@@ -49,7 +49,7 @@ towerProps = (
 
 shopButtons = []
 for i in range(0, len(towerProps)):
-    print(towerProps)
+    #print(towerProps)
     t = towerProps[i]
     shopButtons.append(ShopButton(t['cost'], t['name'], t['desc'], ('Buy', i)))
 
@@ -75,7 +75,7 @@ def main():
                 WINDOWWIDTH = event.w
                 WINDOWHEIGHT = event.h
                 DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), RESIZABLE)
-                DISPLAYSURF.fill(BLACK)
+                DISPLAYSURF.fill(pygame.Color('BLACK'))
             elif event.type == MOUSEBUTTONUP:
                 isClick = True
             mousepos = pygame.mouse.get_pos()
