@@ -19,8 +19,8 @@ basicTowerShop = Shop([
 towerProps = (
     {
         'cost': 20,
-        'name': 'Tower Chungus',
-        'desc': 'Chungus Tower',
+        'name': 'Ryu Tower',
+        'desc': 'Regular tower doing regular things',
         'range': 100,
         'appearance': pygame.image.load('Tiles/firsttower.png'),
         'fireRate': 20,
@@ -33,16 +33,16 @@ towerProps = (
         'shop': basicTowerShop
     },
     {
-        'cost': 20,
-        'name': 'Tower Chungus',
-        'desc': 'Chungus Tower',
+        'cost': 30,
+        'name': 'Cannon Tower',
+        'desc': 'Fires cannon balls that explode and have an area of effect on impact',
         'range': 100,
-        'appearance': pygame.image.load('Tiles/firsttower.png'),
-        'fireRate': 20,
+        'appearance': pygame.image.load('Tiles/cannon.png'),
+        'fireRate': 50,
         'projectile': {
-            'damage': 10,
+            'damage': 20,
             'appearance': [pygame.image.load('Tiles/hadouken.png')],
-            'speed': 30,
+            'speed': 10,
             'effects': False
         },
         'shop': basicTowerShop
@@ -57,10 +57,10 @@ enemyProps = (
         'hp': 10
     },
     {
-        'appearance': pygame.image.load('Tiles/spidersprite.png'),
+        'appearance': pygame.image.load('Tiles/pixil-frame-0.png'),
         'animTime': 0,
-        'speed': 10,
-        'hp': 10
+        'speed': 5,
+        'hp': 20
     }
 )
 
