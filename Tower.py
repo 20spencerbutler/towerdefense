@@ -13,12 +13,15 @@ class Tower:
         self.location = _location
         self.shop = _shop
         self.targetType = "FIRST"
+        self.fireCooldown = 0
 
     def update(self, nearbyEnemies, targetingType):
-        if len(nearbyEnemies) == 0:
-            canfire = False
-        else:
-            canfire = True
+        canFire = False
+        self.fireCooldown = max(self.fireCooldown - 1, 0)
+        if self.fireCooldown == 0:
+            canFire = True
+        if not len(nearbyEnemies) == 0:
+            self.fireCooldown = self.fireRate
             if not targetingType:
                 self.targetType = targetingType
             mostCloseEnemy = None
@@ -49,16 +52,25 @@ class Tower:
             elif self.targetType == "LAST":
                 vectorToEnemy = [orderedEnemyArray[len(orderedEnemyArray)-1].rect.centerx - self.location[0], orderedEnemyArray[len(orderedEnemyArray)-1].rect.centery - self.location[1]]
 
-        if not canfire:
+            returndict = {
+                "canFire": False,
+                "shotFired": self.projectile.retarget(vectorToEnemy, self.range)
+            }
+
+            return returndict
+
+        if not canFire:
             returndict = {
                 "canFire": False,
                 "shotFired": None
             }
             return returndict
+
         returndict = {
-            "canFire" : True,
-            "shotFired": self.projectile.retarget(vectorToEnemy, self.range)
+            'canFire': True,
+            'shotFired': False
         }
+
         return returndict
 
     def upgrade(self):
