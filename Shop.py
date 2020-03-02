@@ -59,7 +59,9 @@ class Shop():
 
     def click(self, coordinates):
         i = 0
+        #print(coordinates)
         for x in self.mainButtonsPos:
+            #print(x)
             if coordinates[0] >= x[0] and coordinates[0] < x[0] + 60 and coordinates[1] >= x[1] and coordinates[1] < x[1] + 60:
                 return self.mainButtons[i]
             i += 1
@@ -68,6 +70,7 @@ class Shop():
             if coordinates[0] >= y[0] and coordinates[0] < y[0] + 60 and coordinates[1] >= y[1] and coordinates[1] < y[1] + 60:
                 return self.otherButtons[j]
             j += 1
+        print(coordinates, self.mainButtonsPos)
         return False
 
     def getSurface(self):

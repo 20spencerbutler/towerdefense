@@ -26,7 +26,7 @@ towerProps = (
             'damage': 10,
             'appearance': [pygame.image.load('Tiles/hadouken.png')],
             'speed': 30,
-            'effects': False
+            'effects': {'slow': 30, 'aoe': 5}
         },
         'shop': basicTowerShop
     },
@@ -66,6 +66,8 @@ def main():
     gameMenu = Menu()
     isClick = False
     while True:
+        #print(ISGAME)
+        pygame.display.update()
         isClick = False
         for event in pygame.event.get():
             if event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE):
@@ -81,14 +83,16 @@ def main():
             mousepos = pygame.mouse.get_pos()
         if ISGAME:
             mousepos = gameClick(mousepos)
-            runningGame.gameTick(mousepos)
+            dispLastTick = runningGame.gameTick(mousepos)
             if mousepos[0] >= 0 and mousepos[0] <= 1000 and mousepos[1] >= 0 and mousepos[1] <= 1000 and isClick:
                 runningGame.handleClick(mousepos)
-            drawSurface(runningGame.display)
+            drawSurface(dispLastTick)
         else:
             mousepos = gameClick(mousepos)
             if mousepos[0] >= 0 and mousepos[0] <= 1000 and mousepos[1] >= 0 and mousepos[1] <= 1000 and isClick:
+                #print('ooy')
                 if gameMenu.mapSelected(mousepos):
+                    #print('HYEYEEY')
                     runningGame = Game(gameMenu.mapSelected(mousepos), 10, 100, mainShop)
                     ISGAME = True
             drawSurface(gameMenu.display)
