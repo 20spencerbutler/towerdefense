@@ -2,6 +2,7 @@ import math
 from pygame import *
 from pygame.sprite import *
 
+
 class Projectile():
     def __init__(self, _posX, _posY, _damage, _appearance, _movementSpeed, _effects):
         # "posX" and "posY" represent the position of the projectile
@@ -36,14 +37,14 @@ class Projectile():
         moveX = vectorToMag[0]
         moveY = vectorToMag[1]
 
-        Projectile.posX = moveX
-        Projectile.posY = moveY
+        self.posX = moveX
+        self.posY = moveY
 
     def retarget(self, towerRange, movementSpeed):
         # intended to designate where a projectile will go (motionVector), and for how long it must exist to get
         # there (extent of towerRange) called ONCE per projectile
 
-        Projectile.existenceTime = (towerRange / movementSpeed)
+        self.existenceTime = (towerRange / movementSpeed)
 
     def makeMotionVector(self, vectorToMag):
         # Makes a unit motion vector vectorToMag is a tuple containing the x and y components of the vector leading
@@ -55,4 +56,8 @@ class Projectile():
             partialSum += math.pow(i, 2)
 
         magnitude = math.sqrt(partialSum)
-        return ((vectorToMag[0]/magnitude), (vectorToMag[1]/magnitude))
+        return ((vectorToMag[0] / magnitude), (vectorToMag[1] / magnitude))
+
+    def upgradeDamage(self):
+        moreDamage = self.damage * 1.2
+        self.damage = moreDamage
