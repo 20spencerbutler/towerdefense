@@ -58,7 +58,7 @@ class ShopButton():
         if bank < self.cost:
             return False
         else:
-            return self.type[0]
+            return self.type
 
     def getDescription(self):
         return self.display

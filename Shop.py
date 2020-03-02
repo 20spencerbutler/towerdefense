@@ -36,7 +36,7 @@ class Shop():
                 self.mainButtonsPos.append(coordinate)
             else:
                 self.surface.blit(x.getIcon(), (105, yPos))
-                yPos += 65
+                #yPos += 65
                 odd = True
                 coordinate = [105, yPos]
                 self.mainButtonsPos.append(coordinate)
@@ -62,15 +62,17 @@ class Shop():
         #print(coordinates)
         for x in self.mainButtonsPos:
             #print(x)
-            if coordinates[0] >= x[0] and coordinates[0] < x[0] + 60 and coordinates[1] >= x[1] and coordinates[1] < x[1] + 60:
-                return self.mainButtons[i]
+            if x[0] <= coordinates[0] < x[0] + 60:
+                #print('hey')
+                if x[1] <= coordinates[1] < x[1] + 60:
+                    return self.mainButtons[i]
             i += 1
         j = 0
         for y in self.otherButtonsPos:
-            if coordinates[0] >= y[0] and coordinates[0] < y[0] + 60 and coordinates[1] >= y[1] and coordinates[1] < y[1] + 60:
+            if y[0] <= coordinates[0] < y[0] + 60 and y[1] <= coordinates[1] < y[1] + 60:
                 return self.otherButtons[j]
             j += 1
-        print(coordinates, self.mainButtonsPos)
+        #print(coordinates, self.mainButtonsPos)
         return False
 
     def getSurface(self):

@@ -31,6 +31,21 @@ towerProps = (
             'effects': False
         },
         'shop': basicTowerShop
+    },
+    {
+        'cost': 20,
+        'name': 'Tower Chungus',
+        'desc': 'Chungus Tower',
+        'range': 100,
+        'appearance': pygame.image.load('Tiles/firsttower.png'),
+        'fireRate': 20,
+        'projectile': {
+            'damage': 10,
+            'appearance': [pygame.image.load('Tiles/hadouken.png')],
+            'speed': 30,
+            'effects': False
+        },
+        'shop': basicTowerShop
     }
 )
 
@@ -114,7 +129,7 @@ class Game():
         dispNow = pygame.Surface((1000, 1000))
         dispNow.blit(self.display, (0, 0))
         for tower in range(0, len(self.towers)):
-            dispNow.blit(tower.appearance, (tower.location[0], tower.location[1]))
+            dispNow.blit(self.towers[tower].appearance, (self.towers[tower].location[0], self.towers[tower].location[1]))
             enemiesInRange = []
             if(self.towerCanFire[tower]):
                 rangeSprite = pygame.sprite.Sprite()
@@ -175,17 +190,17 @@ class Game():
     def handleClick(self, position):
         x, y = position[0], position[1]
         for tower in range(0, len(self.towers)):
-            if isBounded(tower.position[0], x, tower.position[0] + 50) and isBounded(tower.position[1], y, tower.position[1] + 50):
+            if isBounded(self.towers[tower].position[0], x, self.towers[tower].position[0] + 50) and isBounded(self.towers[tower].position[1], y, self.towers[tower].position[1] + 50):
                 self.shop = self.towers[tower].shop
                 self.towerShopOpen = tower
                 return
 
         if isBounded(self.menuBoundary, x, self.display.get_width()):
-            print(x - self.menuBoundary, y)
+            #print(x - self.menuBoundary, y)
             buttonClicked = self.shop.click((x - self.menuBoundary, y))
             if buttonClicked:
                 type = buttonClicked.onClick(self.money)
-                print('hey man')
+                print('hey man', type)
                 if not type:
                     return
                 if type[0] == 'Sell':
@@ -198,6 +213,7 @@ class Game():
                     self.towers[self.towerShopOpen].upgrade()
 
                 if type[0] == 'Buy':
+                    print('buyin')
                     s = towerProps[type[1]]
                     self.buyingTower = True
                     self.rangeOfBuying = s['range']
@@ -217,6 +233,7 @@ class Game():
             Tower(s['range'], s['appearance'], s['fireRate'],
                   Projectile(loc[0], loc[1], t['damage'], t['appearance'], t['speed'], t['effects']),
                   (loc[0], loc[1]), s['shop']))
+        self.towerCanFire.append(False)
 
     def spawnEnemy(self, eI):
         #print('hey lol', self.useNodes)

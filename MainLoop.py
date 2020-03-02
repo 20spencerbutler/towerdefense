@@ -59,6 +59,8 @@ def main():
     global WINDOWWIDTH, WINDOWHEIGHT, DISPLAYSURF, ISGAME
     WINDOWWIDTH = 1000
     WINDOWHEIGHT = 1000
+    FPS = 10
+    FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), RESIZABLE)
     ISGAME = False
     mousepos = None
@@ -66,6 +68,7 @@ def main():
     gameMenu = Menu()
     isClick = False
     while True:
+        FPSCLOCK.tick(FPS)
         #print(ISGAME)
         pygame.display.update()
         isClick = False
