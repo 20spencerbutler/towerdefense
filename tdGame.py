@@ -166,10 +166,11 @@ class Game():
                 dispNow.blit(projectile.appearance, (projectile.rect[0], projectile.rect[1]))
 
         if self.buyingTower:
-            r = self.rangeOfBuying
+            r = int(self.rangeOfBuying)
+            #print(r)
             rangeSurf = pygame.Surface((2 * r, 2 * r), pygame.SRCALPHA)
             rangeSurf.fill((0, 0, 0, 0))
-            pygame.draw.circle(rangeSurf, (200, 0, 0, .5), (r / 2, r / 2), r)
+            pygame.draw.circle(rangeSurf, (200, 0, 0, .5), (int(r / 2), int(r / 2)), r)
             dispNow.blit(rangeSurf, (mx + r, my + r))
 
         #dispNow.blit(pygame.transform.scale(self.shop.getSurface(), (1000 - self.menuBoundary, 1000)), (self.menuBoundary, 0))
@@ -190,7 +191,7 @@ class Game():
     def handleClick(self, position):
         x, y = position[0], position[1]
         for tower in range(0, len(self.towers)):
-            if isBounded(self.towers[tower].position[0], x, self.towers[tower].position[0] + 50) and isBounded(self.towers[tower].position[1], y, self.towers[tower].position[1] + 50):
+            if isBounded(self.towers[tower].location[0], x, self.towers[tower].location[0] + 50) and isBounded(self.towers[tower].location[1], y, self.towers[tower].location[1] + 50):
                 self.shop = self.towers[tower].shop
                 self.towerShopOpen = tower
                 return
@@ -200,7 +201,7 @@ class Game():
             buttonClicked = self.shop.click((x - self.menuBoundary, y))
             if buttonClicked:
                 type = buttonClicked.onClick(self.money)
-                print('hey man', type)
+                #print('hey man', type)
                 if not type:
                     return
                 if type[0] == 'Sell':
@@ -213,11 +214,13 @@ class Game():
                     self.towers[self.towerShopOpen].upgrade()
 
                 if type[0] == 'Buy':
-                    print('buyin')
+                    #print('buyin')
                     s = towerProps[type[1]]
                     self.buyingTower = True
                     self.rangeOfBuying = s['range']
                     self.towerBuying = type[1]
+
+                return
 
         if self.buyingTower:
             self.buildTower(self.towerBuying, (x, y))
