@@ -2,11 +2,11 @@ import math
 from pygame import *
 from pygame.sprite import *
 
-class Projectile():
+class Projectile(pygame.sprite.Sprite):
     def __init__(self, _posX, _posY, _damage, _appearance, _movementSpeed, _effects):
         # "posX" and "posY" represent the position of the projectile
         # "effects" is a dictionary
-
+        super().__init__()
         self.posX = _posX
         self.posY = _posY
         self.damage = _damage
@@ -15,8 +15,8 @@ class Projectile():
         self.existenceTime = 0
         self.timeExisted = 0
 
-        pygame.sprite.Sprite.__init__(_appearance)
-        image = pygame.image.load("sprite.png")
+        #pygame.sprite.Sprite.__init__(_appearance)
+        image = _appearance[0]
         imageSized = pygame.transform.scale(image, (100, 100))
         self.image = imageSized
         self.rect = self.image.get_rect(topleft=(_posX, _posY))

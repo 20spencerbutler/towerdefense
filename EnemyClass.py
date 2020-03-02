@@ -1,11 +1,12 @@
 import pygame, sys, random, time
 from pygame.locals import *
-pygame.init()
+#pygame.init()
 
 
-class Enemy:
+class Enemy(pygame.sprite.Sprite):
 
     def __init__(self, _appearance, _animationTime, _speed, _health, _rect, _nodeArray):
+        super().__init__()
         self.appearance = _appearance
         self.animationTime = _animationTime
         self.animationTicks = 0
