@@ -33,17 +33,20 @@ class Projectile(pygame.sprite.Sprite):
         # sprite (top left coordinate)
 
         self.timeExisted += 1
-        if self.timeExisted == self.existenceTime: self.kill()
+        if self.timeExisted == self.existenceTime: return True
+        print(self.timeExisted, self.existenceTime)
 
         self.posX += self.movement[0]
         self.posY += self.movement[1]
         self.rect[0], self.rect[1] = self.posX, self.posY
 
+        return False
+
     def retarget(self, vecToEnemy, towerRange):
         # intended to designate where a projectile will go (motionVector), and for how long it must exist to get
         # there (extent of towerRange) called ONCE per projectile
         self.timeExisted = 0
-        self.existenceTime = (towerRange / self.movementSpeed)
+        self.existenceTime = math.ceil(towerRange / self.movementSpeed)
 
         unitMotion = self.makeMotionVector(vecToEnemy)
         self.movement = [unitMotion[0] * self.movementSpeed, unitMotion[1] * self.movementSpeed]

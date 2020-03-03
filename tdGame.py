@@ -154,7 +154,8 @@ class Game():
                 dispNow.blit(enemy.appearance, (enemy.rect[0], enemy.rect[1]))
 
         for projectile in self.projectiles:
-            projectile.update()
+            if projectile.update():
+                projectile.kill()
             enemyHit = pygame.sprite.spritecollide(projectile, self.enemies, False)
             if enemyHit:
                 if(enemyHit[0].takeDamage(projectile.damage, projectile.effects)):

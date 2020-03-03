@@ -51,6 +51,7 @@ class Tower:
                 vectorToEnemy = [orderedEnemyArray[len(orderedEnemyArray)-1].rect.centerx - self.location[0], orderedEnemyArray[len(orderedEnemyArray)-1].rect.centery - self.location[1]]
 
             #print(vectorToEnemy, '----', self.targetType)
+            #vectorToEnemy = (500, 0)
             self.projectile.retarget(vectorToEnemy, self.range)
             returndict = {
                 "canFire": False,
