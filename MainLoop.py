@@ -59,7 +59,7 @@ def main():
     global WINDOWWIDTH, WINDOWHEIGHT, DISPLAYSURF, ISGAME
     WINDOWWIDTH = 1000
     WINDOWHEIGHT = 1000
-    FPS = 10
+    FPS = 8
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), RESIZABLE)
     ISGAME = False

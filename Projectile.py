@@ -19,13 +19,13 @@ class Projectile(pygame.sprite.Sprite):
 
         #pygame.sprite.Sprite.__init__(_appearance)
         image = _appearance[0]
-        imageSized = pygame.transform.scale(image, (100, 100))
+        imageSized = pygame.transform.scale(image, (10, 10))
         self.image = imageSized
         self.rect = self.image.get_rect(topleft=(_posX, _posY))
 
-    def __del__(self):
-        # deletes self
-        print("object deleted")
+    # def __del__(self):
+    #     # deletes self
+    #     print("object deleted")
 
     def update(self):
         # "vectorToMag" is a tuple containing the x and y components of the vector leading from tower sprite to enemy
@@ -37,6 +37,7 @@ class Projectile(pygame.sprite.Sprite):
 
         self.posX += self.movement[0]
         self.posY += self.movement[1]
+        self.rect[0], self.rect[1] = self.posX, self.posY
 
     def retarget(self, vecToEnemy, towerRange):
         # intended to designate where a projectile will go (motionVector), and for how long it must exist to get

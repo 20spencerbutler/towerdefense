@@ -26,8 +26,8 @@ towerProps = (
         'fireRate': 20,
         'projectile': {
             'damage': 10,
-            'appearance': [pygame.image.load('Tiles/hadouken.png')],
-            'speed': 30,
+            'appearance': [pygame.transform.scale(pygame.image.load('Tiles/hadouken.png'), (10, 10))],
+            'speed': 15,
             'effects': False
         },
         'shop': basicTowerShop
@@ -141,6 +141,7 @@ class Game():
             retNow = self.towers[tower].update(enemiesInRange, False)
             self.towerCanFire[tower] = retNow['canFire']
             if retNow['shotFired']:
+                #print('heyyyy')
                 self.projectiles.add(retNow['shotFired'])
 
         for enemy in self.enemies:
@@ -156,10 +157,12 @@ class Game():
             projectile.update()
             enemyHit = pygame.sprite.spritecollide(projectile, self.enemies, False)
             if enemyHit:
-                enemyHit[0].takeDamage(projectile.damage, projectile.effects)
-                if('aoe' in projectile.effects):
-                    for a in range(1, len(enemyHit)):
-                        enemyHit[a].takeDamage(projectile.damage, projectile.effects)
+                if(enemyHit[0].takeDamage(projectile.damage, projectile.effects)):
+                    enemyHit[0].kill()
+                if(projectile.effects):
+                    if('aoe' in projectile.effects):
+                        for a in range(1, len(enemyHit)):
+                            enemyHit[a].takeDamage(projectile.damage, projectile.effects)
 
                 self.projectiles.remove(projectile)
             else:

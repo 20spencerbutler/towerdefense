@@ -21,17 +21,18 @@ class Enemy(pygame.sprite.Sprite):
 
 
     def takeDamage(self, damageNum, effectArray):
-
-        for effect in effectArray:
-            haseffect = False
-            for status in self.statusEffects:
-                if effect == status:
-                    haseffect = True
-            if not haseffect:
-                self.statusEffects.append(effect)
+        if effectArray:
+            for effect in effectArray:
+                haseffect = False
+                for status in self.statusEffects:
+                    if effect == status:
+                        haseffect = True
+                if not haseffect:
+                    self.statusEffects.append(effect)
 
         self.health -= damageNum
         if self.health <= 0:
+            #print('enemy got zapped')
             return True
         return False
 
