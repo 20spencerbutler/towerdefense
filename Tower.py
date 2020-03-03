@@ -1,7 +1,4 @@
-
-import pygame, sys, random, time
-from pygame.locals import *
-pygame.init()
+import copy
 
 class Tower:
 
@@ -19,6 +16,7 @@ class Tower:
         canFire = False
         self.fireCooldown = max(self.fireCooldown - 1, 0)
         if self.fireCooldown == 0:
+            #print('heyyyyy', nearbyEnemies)
             canFire = True
         if not len(nearbyEnemies) == 0:
             self.fireCooldown = self.fireRate
@@ -56,7 +54,7 @@ class Tower:
             self.projectile.retarget(vectorToEnemy, self.range)
             returndict = {
                 "canFire": False,
-                "shotFired": self.projectile
+                "shotFired": copy.copy(self.projectile)
             }
 
             return returndict
