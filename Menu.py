@@ -56,10 +56,10 @@ class Menu():
     def mapSelected(self, mousePos):
         # mousePos represents the location of a mouse click
         theMap = None
-        print(mousePos)
+        #print(mousePos)
         for a in range(len(self.mapArr)):
             if self.board[a].collidepoint(
                     mousePos):
                 theMap = Map(self.mapArr[a], self.nodeArr[a])
-        print(theMap)
+        #print(theMap)
         return theMap

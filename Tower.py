@@ -22,7 +22,7 @@ class Tower:
             canFire = True
         if not len(nearbyEnemies) == 0:
             self.fireCooldown = self.fireRate
-            if not targetingType:
+            if targetingType:
                 self.targetType = targetingType
             mostCloseEnemy = None
             closeEnemyDistance = 1000000000
@@ -52,9 +52,11 @@ class Tower:
             elif self.targetType == "LAST":
                 vectorToEnemy = [orderedEnemyArray[len(orderedEnemyArray)-1].rect.centerx - self.location[0], orderedEnemyArray[len(orderedEnemyArray)-1].rect.centery - self.location[1]]
 
+            #print(vectorToEnemy, '----', self.targetType)
+            self.projectile.retarget(vectorToEnemy, self.range)
             returndict = {
                 "canFire": False,
-                "shotFired": self.projectile.retarget(vectorToEnemy, self.range)
+                "shotFired": self.projectile
             }
 
             return returndict

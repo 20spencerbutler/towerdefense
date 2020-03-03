@@ -133,11 +133,11 @@ class Game():
             enemiesInRange = []
             if(self.towerCanFire[tower]):
                 rangeSprite = pygame.sprite.Sprite()
-                rangeSprite.rect = (self.towers[tower].location[0], self.towers[tower].location[1], 1, 1)
+                rangeSprite.rect = pygame.Rect(self.towers[tower].location[0], self.towers[tower].location[1], 1, 1)
                 rangeSprite.radius = self.towers[tower].range
                 enemiesInRange = pygame.sprite.spritecollide(rangeSprite, self.enemies,
-                                                             False, pygame.sprite.collide_circle()
-                                                             ).sprites()
+                                                             False, pygame.sprite.collide_circle
+                                                             )
             retNow = self.towers[tower].update(enemiesInRange, False)
             self.towerCanFire[tower] = retNow['canFire']
             if retNow['shotFired']:
@@ -154,7 +154,7 @@ class Game():
 
         for projectile in self.projectiles:
             projectile.update()
-            enemyHit = pygame.sprite.spritecollide(projectile, self.enemies)
+            enemyHit = pygame.sprite.spritecollide(projectile, self.enemies, False)
             if enemyHit:
                 enemyHit[0].takeDamage(projectile.damage, projectile.effects)
                 if('aoe' in projectile.effects):
@@ -163,7 +163,7 @@ class Game():
 
                 self.projectiles.remove(projectile)
             else:
-                dispNow.blit(projectile.appearance, (projectile.rect[0], projectile.rect[1]))
+                dispNow.blit(projectile.image, (projectile.rect[0], projectile.rect[1]))
 
         if self.buyingTower:
             r = int(self.rangeOfBuying)
