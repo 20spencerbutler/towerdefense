@@ -1,6 +1,7 @@
-import math
-from pygame import *
+from pygame.locals import *
 from pygame.sprite import *
+import math
+
 
 class Projectile(pygame.sprite.Sprite):
     def __init__(self, _posX, _posY, _damage, _appearance, _movementSpeed, _effects):
@@ -14,6 +15,7 @@ class Projectile(pygame.sprite.Sprite):
         self.effects = _effects
         self.existenceTime = 0
         self.timeExisted = 0
+        self.movement = [0, 0]
 
         #pygame.sprite.Sprite.__init__(_appearance)
         image = _appearance[0]
@@ -25,30 +27,31 @@ class Projectile(pygame.sprite.Sprite):
         # deletes self
         print("object deleted")
 
-    def update(self, vectorToMag, despawn):
+    def update(self):
         # "vectorToMag" is a tuple containing the x and y components of the vector leading from tower sprite to enemy
         # "despawn" is a boolean that determines if the projectile should stop existing
         # sprite (top left coordinate)
 
-        if despawn is True:
-            Projectile.__del__(self)
+        self.timeExisted += 1
+        if self.timeExisted == self.existenceTime: self.kill()
 
-        moveX = vectorToMag[0]
-        moveY = vectorToMag[1]
+        self.posX += self.movement[0]
+        self.posY += self.movement[1]
 
-        Projectile.posX = moveX
-        Projectile.posY = moveY
-
-    def retarget(self, towerRange, movementSpeed):
+    def retarget(self, vecToEnemy, towerRange):
         # intended to designate where a projectile will go (motionVector), and for how long it must exist to get
         # there (extent of towerRange) called ONCE per projectile
+        self.timeExisted = 0
+        self.existenceTime = (towerRange / self.movementSpeed)
 
-        Projectile.existenceTime = (towerRange / movementSpeed)
+        unitMotion = self.makeMotionVector(vecToEnemy)
+        self.movement = [unitMotion[0] * self.movementSpeed, unitMotion[1] * self.movementSpeed]
 
     def makeMotionVector(self, vectorToMag):
         # Makes a unit motion vector vectorToMag is a tuple containing the x and y components of the vector leading
         # from tower sprite to enemy sprite (top left coordinate)
         # for example, [2, 2] represents a vector 2 in x direction, 2 in y direction
+        #print(vectorToMag)
 
         partialSum = 0
         for i in vectorToMag:
