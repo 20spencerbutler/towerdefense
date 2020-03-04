@@ -47,6 +47,21 @@ towerProps = (
     }
 )
 
+enemyProps = (
+    {
+        'appearance': pygame.image.load('Tiles/spidersprite.png'),
+        'animTime': 0,
+        'speed': 10,
+        'hp': 10
+    },
+    {
+        'appearance': pygame.image.load('Tiles/spidersprite.png'),
+        'animTime': 0,
+        'speed': 10,
+        'hp': 10
+    }
+)
+
 shopButtons = []
 for i in range(0, len(towerProps)):
     #print(towerProps)
@@ -96,7 +111,7 @@ def main():
                 #print('ooy')
                 if gameMenu.mapSelected(mousepos):
                     #print('HYEYEEY')
-                    runningGame = Game(gameMenu.mapSelected(mousepos), 10, 100, mainShop)
+                    runningGame = Game(gameMenu.mapSelected(mousepos), 10, 100, mainShop, towerProps, enemyProps)
                     ISGAME = True
             drawSurface(gameMenu.display)
 
