@@ -9,61 +9,6 @@ from EnemyClass import Enemy
 
 aNumber = re.compile(r'\d+')
 
-basicTowerShop = Shop([
-    ShopButton(0, 'Sell', 'Sells Tower', ('Sell')),
-    ShopButton(0, 'Target First', 'Targets First Enemy', ('retarget', 0)),
-    ShopButton(0, 'Target Last', 'Targets Last Enemy', ('retarget', 1)),
-    ShopButton(0, 'Target Closest', 'Targets Closest Enemy', ('retarget', 2))
-])
-
-towerProps = (
-    {
-        'cost': 20,
-        'name': 'Tower Chungus',
-        'desc': 'Chungus Tower',
-        'range': 100,
-        'appearance': pygame.image.load('Tiles/firsttower.png'),
-        'fireRate': 20,
-        'projectile': {
-            'damage': 10,
-            'appearance': [pygame.transform.scale(pygame.image.load('Tiles/hadouken.png'), (10, 10))],
-            'speed': 15,
-            'effects': False
-        },
-        'shop': basicTowerShop
-    },
-    {
-        'cost': 20,
-        'name': 'Tower Chungus',
-        'desc': 'Chungus Tower',
-        'range': 100,
-        'appearance': pygame.image.load('Tiles/firsttower.png'),
-        'fireRate': 20,
-        'projectile': {
-            'damage': 10,
-            'appearance': [pygame.image.load('Tiles/hadouken.png')],
-            'speed': 30,
-            'effects': False
-        },
-        'shop': basicTowerShop
-    }
-)
-
-enemyProps = (
-    {
-        'appearance': pygame.image.load('Tiles/spidersprite.png'),
-        'animTime': 0,
-        'speed': 10,
-        'hp': 10
-    },
-    {
-        'appearance': pygame.image.load('Tiles/spidersprite.png'),
-        'animTime': 0,
-        'speed': 10,
-        'hp': 10
-    }
-)
-
 class writerMine:
     def __init__(self, fonter = 't'):
         self.fonts = []
@@ -88,7 +33,7 @@ def isBounded(low, val, hi,):
     return val >= low and val <= hi
 
 class Game():
-    def __init__(self, mapUse, startingLives, startingMoney, shopDefault):
+    def __init__(self, mapUse, startingLives, startingMoney, shopDefault, tp, ep):
         self.menuBoundary = 800
         self.money = startingMoney
         self.lives = startingLives
@@ -104,6 +49,8 @@ class Game():
         self.towerShopOpen = -1
         self.buyingTower = False
         self.printer = writerMine('')
+        self.towerProps = tp
+        self.enemyProps = ep
         rawNodes = self.map.nodes
         self.useNodes = []
         for i in rawNodes:
@@ -219,7 +166,7 @@ class Game():
 
                 if type[0] == 'Buy':
                     #print('buyin')
-                    s = towerProps[type[1]]
+                    s = self.towerProps[type[1]]
                     self.buyingTower = True
                     self.rangeOfBuying = s['range']
                     self.towerBuying = type[1]
@@ -234,7 +181,7 @@ class Game():
         self.towerShopOpen = -1
 
     def buildTower(self, tower, loc):
-        s = towerProps[tower]
+        s = self.towerProps[tower]
         t = s['projectile']
         self.towers.append(
             Tower(s['range'], s['appearance'], s['fireRate'],
@@ -245,6 +192,6 @@ class Game():
 
     def spawnEnemy(self, eI):
         #print('hey lol', self.useNodes)
-        en = enemyProps[eI]
+        en = self.enemyProps[eI]
         self.enemies.add(Enemy(en['appearance'], en['animTime'], en['speed'], en['hp'], pygame.Rect(self.useNodes[0][0], self.useNodes[0][1], 50, 50), self.useNodes))
 
