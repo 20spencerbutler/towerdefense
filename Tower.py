@@ -13,6 +13,8 @@ class Tower:
         self.fireCooldown = 0
 
     def update(self, nearbyEnemies, targetingType):
+        # if(len(nearbyEnemies) != 0):
+        #     print(nearbyEnemies)
         canFire = False
         self.fireCooldown = max(self.fireCooldown - 1, 0)
         if self.fireCooldown == 0:

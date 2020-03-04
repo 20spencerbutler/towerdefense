@@ -34,7 +34,7 @@ class Projectile(pygame.sprite.Sprite):
 
         self.timeExisted += 1
         if self.timeExisted == self.existenceTime: return True
-        print(self.timeExisted, self.existenceTime)
+        #print(self.timeExisted, self.existenceTime)
 
         self.posX += self.movement[0]
         self.posY += self.movement[1]
