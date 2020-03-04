@@ -22,10 +22,10 @@ class Map():
             drawY = 0
             for y in x:
                 if y == "A":
-                    windows = pygame.image.load('Tiles/A.png')
+                    windows = pygame.image.load('Tiles/GrassSprite.png')
                     self.display.blit(windows, [drawY, drawX])
                 if y == "B":
-                    windows = pygame.image.load('Tiles/B.png')
+                    windows = pygame.image.load('Tiles/water.png')
                     self.display.blit(windows, [drawY, drawX])
                 drawY += tileSize
             drawX += tileSize
