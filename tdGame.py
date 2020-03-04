@@ -240,6 +240,7 @@ class Game():
             Tower(s['range'], s['appearance'], s['fireRate'],
                   Projectile(loc[0], loc[1], t['damage'], t['appearance'], t['speed'], t['effects']),
                   (loc[0], loc[1]), s['shop']))
+        self.money -= s['cost']
         self.towerCanFire.append(False)
 
     def spawnEnemy(self, eI):
