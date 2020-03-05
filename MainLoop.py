@@ -52,13 +52,15 @@ enemyProps = (
         'appearance': pygame.image.load('Tiles/spidersprite.png'),
         'animTime': 0,
         'speed': 10,
-        'hp': 10
+        'hp': 10,
+        'bounty': 5
     },
     {
         'appearance': pygame.image.load('Tiles/spidersprite.png'),
         'animTime': 0,
         'speed': 10,
-        'hp': 10
+        'hp': 10,
+        'bounty': 5
     }
 )
 
