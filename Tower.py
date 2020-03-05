@@ -47,12 +47,12 @@ class Tower:
                                 orderedEnemyArray.append(enemy)
             if self.targetType == "CLOSE":
                 vectorToEnemy = [mostCloseEnemy.rect.centerx - self.location[0], mostCloseEnemy.rect.centery - self.location[1]]
-            elif self.targetType == "FIRST":
-                vectorToEnemy = [orderedEnemyArray[0].rect.centerx - self.location[0], orderedEnemyArray[0].rect.centery - self.location[1]]
             elif self.targetType == "LAST":
+                vectorToEnemy = [orderedEnemyArray[0].rect.centerx - self.location[0], orderedEnemyArray[0].rect.centery - self.location[1]]
+            elif self.targetType == "FIRST":
                 vectorToEnemy = [orderedEnemyArray[len(orderedEnemyArray)-1].rect.centerx - self.location[0], orderedEnemyArray[len(orderedEnemyArray)-1].rect.centery - self.location[1]]
 
-            #print(vectorToEnemy, '----', self.targetType)
+            print(vectorToEnemy, '----', self.targetType)
             #vectorToEnemy = (500, 0)
             self.projectile.retarget(vectorToEnemy, self.range)
             returndict = {
