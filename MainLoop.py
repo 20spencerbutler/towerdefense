@@ -8,7 +8,7 @@ from Map import Map
 #pygame.init()
 
 basicTowerShop = Shop([
-    ShopButton(0, 'Sell', 'Sells Tower', ('Sell')),
+    ShopButton(0, 'Sell', 'Sells Tower', ('Sell', False)),
     ShopButton(0, 'Target First', 'Targets First Enemy', ('retarget', 0)),
     ShopButton(0, 'Target Last', 'Targets Last Enemy', ('retarget', 1)),
     ShopButton(0, 'Target Closest', 'Targets Closest Enemy', ('retarget', 2))
