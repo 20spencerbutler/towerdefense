@@ -105,12 +105,18 @@ class Game():
                 projectile.kill()
             enemyHit = pygame.sprite.spritecollide(projectile, self.enemies, False)
             if enemyHit:
-                if(enemyHit[0].takeDamage(projectile.damage, projectile.effects)):
+                wasHit = enemyHit[0].takeDamage(projectile.damage, projectile.effects)
+                if(wasHit):
                     enemyHit[0].kill()
+                    self.money += wasHit
                 if(projectile.effects):
+                    #print('t', projectile.effects)
                     if('aoe' in projectile.effects):
                         for a in range(1, len(enemyHit)):
-                            enemyHit[a].takeDamage(projectile.damage, projectile.effects)
+                            wasHit = enemyHit[a].takeDamage(projectile.damage, projectile.effects)
+                            if(wasHit):
+                                enemyHit[a].kill()
+                                self.money += wasHit
 
                 self.projectiles.remove(projectile)
             else:
@@ -155,6 +161,7 @@ class Game():
                 #print('hey man', type)
                 if not type:
                     return
+
                 if type[0] == 'Sell':
                     self.towers.pop(self.towerShopOpen)
                     self.shop = self.shopNormal
@@ -193,5 +200,5 @@ class Game():
     def spawnEnemy(self, eI):
         #print('hey lol', self.useNodes)
         en = self.enemyProps[eI]
-        self.enemies.add(Enemy(en['appearance'], en['animTime'], en['speed'], en['hp'], pygame.Rect(self.useNodes[0][0], self.useNodes[0][1], 50, 50), self.useNodes))
+        self.enemies.add(Enemy(en['appearance'], en['animTime'], en['speed'], en['hp'], pygame.Rect(self.useNodes[0][0], self.useNodes[0][1], 50, 50), self.useNodes, en['bounty']))
 

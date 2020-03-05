@@ -5,7 +5,7 @@ from pygame.locals import *
 
 class Enemy(pygame.sprite.Sprite):
 
-    def __init__(self, _appearance, _animationTime, _speed, _health, _rect, _nodeArray):
+    def __init__(self, _appearance, _animationTime, _speed, _health, _rect, _nodeArray, _bounty):
         super().__init__()
         self.appearance = _appearance
         self.animationTime = _animationTime
@@ -17,7 +17,8 @@ class Enemy(pygame.sprite.Sprite):
         self.nodeArray = _nodeArray
         self.currentNodeIndex = 0
         self.distanceToNode = 0
-        self.moveVector =[]
+        self.moveVector = []
+        self.bounty = _bounty
 
 
     def takeDamage(self, damageNum, effectArray):
@@ -33,7 +34,7 @@ class Enemy(pygame.sprite.Sprite):
         self.health -= damageNum
         if self.health <= 0:
             #print('enemy got zapped')
-            return True
+            return self.bounty
         return False
 
     def update(self):
