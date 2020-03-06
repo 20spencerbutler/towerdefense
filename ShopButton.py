@@ -70,13 +70,15 @@ class ShopButton():
     def getType(self):
         return self.type
 
-    def switchClick(self, switch):
-        self.clicked = switch
+    def switchClick(self):
         if self.clicked == True:
-            pygame.draw.line(self.icon, WHITE, (0, 0), (0, 60))
-            pygame.draw.line(self.icon, WHITE, (0, 0), (60, 0))
-            pygame.draw.line(self.icon, WHITE, (60, 0), (60, 60))
-            pygame.draw.line(self.icon, WHITE, (0, 60), (60, 60))
+            self.clicked = False
+        elif self.clicked == False:
+            self.clicked = True
+            pygame.draw.line(self.icon, WHITE, (0, 0), (0, 60), 3)
+            pygame.draw.line(self.icon, WHITE, (0, 0), (60, 0), 3)
+            pygame.draw.line(self.icon, WHITE, (60, 0), (60, 60), 3)
+            pygame.draw.line(self.icon, WHITE, (0, 60), (60, 60), 3)
 
 def makeText(text, color, bgcolor, top, left, font):
     textSurf = font.render(text, True, color, bgcolor)

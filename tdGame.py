@@ -53,7 +53,6 @@ class Game():
         self.enemyProps = ep
         rawNodes = self.map.nodes
         self.useNodes = []
-        self.range = False
         for i in rawNodes:
             teste = i[0] + i[1]
             #print(i)
@@ -102,37 +101,33 @@ class Game():
                 dispNow.blit(enemy.appearance, (enemy.rect[0], enemy.rect[1]))
 
         for projectile in self.projectiles:
-            dispNow.blit(projectile.image, (projectile.rect[0], projectile.rect[1]))
-            if(projectile.timeExisted > -1):
-                if projectile.update():
-                    projectile.kill()
-                if projectile.timeExisted > 0:
-                    enemyHit = pygame.sprite.spritecollide(projectile, self.enemies, False)
-                    if enemyHit:
-                        wasHit = enemyHit[0].takeDamage(projectile.damage, projectile.effects)
-                        if(wasHit):
-                            enemyHit[0].kill()
-                            self.money += wasHit
-                        if(projectile.effects):
-                            #print('t', projectile.effects)
-                            if('aoe' in projectile.effects):
-                                for a in range(1, len(enemyHit)):
-                                    wasHit = enemyHit[a].takeDamage(projectile.damage, projectile.effects)
-                                    if(wasHit):
-                                        enemyHit[a].kill()
-                                        self.money += wasHit
+            if projectile.update():
+                projectile.kill()
+            enemyHit = pygame.sprite.spritecollide(projectile, self.enemies, False)
+            if enemyHit:
+                wasHit = enemyHit[0].takeDamage(projectile.damage, projectile.effects)
+                if(wasHit):
+                    enemyHit[0].kill()
+                    self.money += wasHit
+                if(projectile.effects):
+                    #print('t', projectile.effects)
+                    if('aoe' in projectile.effects):
+                        for a in range(1, len(enemyHit)):
+                            wasHit = enemyHit[a].takeDamage(projectile.damage, projectile.effects)
+                            if(wasHit):
+                                enemyHit[a].kill()
+                                self.money += wasHit
 
-                        self.projectiles.remove(projectile)
+                self.projectiles.remove(projectile)
             else:
-                print('hey')
-                projectile.timeExisted = 0
+                dispNow.blit(projectile.image, (projectile.rect[0], projectile.rect[1]))
 
         if self.buyingTower:
             r = int(self.rangeOfBuying)
             #print(r)
             rangeSurf = pygame.Surface((2 * r, 2 * r), pygame.SRCALPHA)
             rangeSurf.fill((0, 0, 0, 0))
-            pygame.draw.circle(rangeSurf, (200, 0, 0, 1), (int(r / 2), int(r / 2)), r)
+            pygame.draw.circle(rangeSurf, (200, 0, 0, .5), (int(r / 2), int(r / 2)), r)
             dispNow.blit(rangeSurf, (mx + r, my + r))
 
         #dispNow.blit(pygame.transform.scale(self.shop.getSurface(), (1000 - self.menuBoundary, 1000)), (self.menuBoundary, 0))
@@ -144,18 +139,14 @@ class Game():
             if(buttonHovered):
                 currentHoverSurface = buttonHovered.getDescription()
         dispNow.blit(self.bottomMenu(currentHoverSurface), (0, self.menuBoundary))
-        inter = random.randint(0, 50)
+        inter = random.randint(0, 10)
         if inter == 0:
             self.spawnEnemy(0)
-        for tower in range(0, len(self.towers)):
-            if isBounded(self.towers[tower].location[0], mx, self.towers[tower].location[0] + 50) and isBounded(self.towers[tower].location[1], my, self.towers[tower].location[1] + 50):
-                if self.range == True:
-                    pygame.draw.circle(dispNow, (255, 0, 0), (int(self.towers[tower].location[0])+15, int(self.towers[tower].location[1])+15), self.towers[tower].range, 1)
+
         return dispNow
 
     def handleClick(self, position):
         x, y = position[0], position[1]
-        self.range = True
         for tower in range(0, len(self.towers)):
             if isBounded(self.towers[tower].location[0], x, self.towers[tower].location[0] + 50) and isBounded(self.towers[tower].location[1], y, self.towers[tower].location[1] + 50):
                 self.shop = self.towers[tower].shop
@@ -166,6 +157,7 @@ class Game():
             #print(x - self.menuBoundary, y)
             buttonClicked = self.shop.click((x - self.menuBoundary, y))
             if buttonClicked:
+                buttonClicked.switchClick()
                 type = buttonClicked.onClick(self.money)
                 #print('hey man', type)
                 if not type:
