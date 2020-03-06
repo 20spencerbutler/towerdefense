@@ -54,10 +54,9 @@ class Tower:
 
             #print(vectorToEnemy, '----', self.targetType)
             #vectorToEnemy = (500, 0)
-            self.projectile.retarget(vectorToEnemy, self.range)
             returndict = {
                 "canFire": False,
-                "shotFired": copy.copy(self.projectile)
+                "shotFired": self.projectile.retarget(vectorToEnemy, self.range)
             }
 
             return returndict

@@ -1,4 +1,4 @@
-import pygame, sys, random, time
+import pygame, math
 from pygame.locals import *
 #pygame.init()
 
@@ -39,6 +39,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def update(self):
         if self.distanceToNode - self.speed <= 0:
+            #print('t')
             if self.currentNodeIndex < len(self.nodeArray) - 1:
                 self.rect.centerx = self.nodeArray[self.currentNodeIndex][0]
                 self.rect.centery = self.nodeArray[self.currentNodeIndex][1]
@@ -50,7 +51,7 @@ class Enemy(pygame.sprite.Sprite):
                 return True
         else:
             self.rect.move_ip(self.speed * self.moveVector[0], self.speed * self.moveVector[1])
-            self.distanceToNode -= self.speed
+            self.distanceToNode -= math.sqrt(math.floor(self.speed * self.moveVector[0]) ** 2 + math.floor(self.speed * self.moveVector[1]) ** 2)
             return False
 
 

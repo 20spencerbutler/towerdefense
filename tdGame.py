@@ -101,33 +101,37 @@ class Game():
                 dispNow.blit(enemy.appearance, (enemy.rect[0], enemy.rect[1]))
 
         for projectile in self.projectiles:
-            if projectile.update():
-                projectile.kill()
-            enemyHit = pygame.sprite.spritecollide(projectile, self.enemies, False)
-            if enemyHit:
-                wasHit = enemyHit[0].takeDamage(projectile.damage, projectile.effects)
-                if(wasHit):
-                    enemyHit[0].kill()
-                    self.money += wasHit
-                if(projectile.effects):
-                    #print('t', projectile.effects)
-                    if('aoe' in projectile.effects):
-                        for a in range(1, len(enemyHit)):
-                            wasHit = enemyHit[a].takeDamage(projectile.damage, projectile.effects)
-                            if(wasHit):
-                                enemyHit[a].kill()
-                                self.money += wasHit
+            dispNow.blit(projectile.image, (projectile.rect[0], projectile.rect[1]))
+            if(projectile.timeExisted > -1):
+                if projectile.update():
+                    projectile.kill()
+                if projectile.timeExisted > 0:
+                    enemyHit = pygame.sprite.spritecollide(projectile, self.enemies, False)
+                    if enemyHit:
+                        wasHit = enemyHit[0].takeDamage(projectile.damage, projectile.effects)
+                        if(wasHit):
+                            enemyHit[0].kill()
+                            self.money += wasHit
+                        if(projectile.effects):
+                            #print('t', projectile.effects)
+                            if('aoe' in projectile.effects):
+                                for a in range(1, len(enemyHit)):
+                                    wasHit = enemyHit[a].takeDamage(projectile.damage, projectile.effects)
+                                    if(wasHit):
+                                        enemyHit[a].kill()
+                                        self.money += wasHit
 
-                self.projectiles.remove(projectile)
+                        self.projectiles.remove(projectile)
             else:
-                dispNow.blit(projectile.image, (projectile.rect[0], projectile.rect[1]))
+                print('hey')
+                projectile.timeExisted = 0
 
         if self.buyingTower:
             r = int(self.rangeOfBuying)
             #print(r)
             rangeSurf = pygame.Surface((2 * r, 2 * r), pygame.SRCALPHA)
             rangeSurf.fill((0, 0, 0, 0))
-            pygame.draw.circle(rangeSurf, (200, 0, 0, .5), (int(r / 2), int(r / 2)), r)
+            pygame.draw.circle(rangeSurf, (200, 0, 0, 1), (int(r / 2), int(r / 2)), r)
             dispNow.blit(rangeSurf, (mx + r, my + r))
 
         #dispNow.blit(pygame.transform.scale(self.shop.getSurface(), (1000 - self.menuBoundary, 1000)), (self.menuBoundary, 0))
@@ -139,7 +143,7 @@ class Game():
             if(buttonHovered):
                 currentHoverSurface = buttonHovered.getDescription()
         dispNow.blit(self.bottomMenu(currentHoverSurface), (0, self.menuBoundary))
-        inter = random.randint(0, 10)
+        inter = random.randint(0, 50)
         if inter == 0:
             self.spawnEnemy(0)
 
