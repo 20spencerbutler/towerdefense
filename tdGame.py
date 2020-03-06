@@ -53,6 +53,7 @@ class Game():
         self.enemyProps = ep
         rawNodes = self.map.nodes
         self.useNodes = []
+        self.range = False
         for i in rawNodes:
             teste = i[0] + i[1]
             #print(i)
@@ -142,11 +143,15 @@ class Game():
         inter = random.randint(0, 10)
         if inter == 0:
             self.spawnEnemy(0)
-
+        for tower in range(0, len(self.towers)):
+            if isBounded(self.towers[tower].location[0], mx, self.towers[tower].location[0] + 50) and isBounded(self.towers[tower].location[1], my, self.towers[tower].location[1] + 50):
+                if self.range == True:
+                    pygame.draw.circle(dispNow, (255, 0, 0), (int(self.towers[tower].location[0])+15, int(self.towers[tower].location[1])+15), 100, 1)
         return dispNow
 
     def handleClick(self, position):
         x, y = position[0], position[1]
+        self.range = True
         for tower in range(0, len(self.towers)):
             if isBounded(self.towers[tower].location[0], x, self.towers[tower].location[0] + 50) and isBounded(self.towers[tower].location[1], y, self.towers[tower].location[1] + 50):
                 self.shop = self.towers[tower].shop
