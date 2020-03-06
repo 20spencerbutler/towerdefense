@@ -17,10 +17,10 @@ basicTowerShop = Shop([
 towerProps = (
     {
         'cost': 20,
-        'name': 'Tower Chungus',
-        'desc': 'Chungus Tower',
+        'name': 'Cannon',
+        'desc': 'Splash damage tower',
         'range': 100,
-        'appearance': pygame.image.load('Tiles/firsttower.png'),
+        'appearance': pygame.image.load('Tiles/cannon.png'),
         'fireRate': 100,
         'projectile': {
             'damage': 10,
@@ -32,8 +32,8 @@ towerProps = (
     },
     {
         'cost': 20,
-        'name': 'Tower Chungus',
-        'desc': 'Chungus Tower',
+        'name': 'Basic tower',
+        'desc': 'Basic 1 shot tower',
         'range': 100,
         'appearance': pygame.image.load('Tiles/firsttower.png'),
         'fireRate': 100,
