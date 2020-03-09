@@ -139,7 +139,7 @@ class Game():
             if(buttonHovered):
                 currentHoverSurface = buttonHovered.getDescription()
         dispNow.blit(self.bottomMenu(currentHoverSurface), (0, self.menuBoundary))
-        inter = random.randint(0, 80)
+        inter = random.randint(0, 40)
         if inter == 0:
             self.spawnEnemy(0)
 
