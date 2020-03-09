@@ -16,6 +16,7 @@ class ShopButton():
         self.type = _type
         self.display = pygame.Surface((800, 600))
         self.icon = pygame.Surface((60, 60))
+        self.clicked = False
 
         font = pygame.font.Font('freesansbold.ttf', 20)
         pygame.draw.rect(self.display, GRAY, (50, 200, 500, 200))
@@ -69,8 +70,21 @@ class ShopButton():
     def getType(self):
         return self.type
 
+    def switchClick(self):
+        if self.clicked == True:
+            self.clicked = False
+        elif self.clicked == False:
+            self.clicked = True
+            pygame.draw.line(self.icon, WHITE, (0, 0), (0, 60), 3)
+            pygame.draw.line(self.icon, WHITE, (0, 0), (60, 0), 3)
+            pygame.draw.line(self.icon, WHITE, (60, 0), (60, 60), 3)
+            pygame.draw.line(self.icon, WHITE, (0, 60), (60, 60), 3)
+
 def makeText(text, color, bgcolor, top, left, font):
     textSurf = font.render(text, True, color, bgcolor)
     textRect = textSurf.get_rect()
     textRect.topleft = (top, left)
     return (textSurf, textRect)
+
+button = ShopButton(220, "Blaster", "The blaster blasts things", ["Buy", "Attack Tower"])
+button.switchClick()

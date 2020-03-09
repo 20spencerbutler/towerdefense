@@ -157,6 +157,8 @@ class Game():
             #print(x - self.menuBoundary, y)
             buttonClicked = self.shop.click((x - self.menuBoundary, y))
             if buttonClicked:
+                buttonClicked.switchClick()
+                pygame.display.update()
                 type = buttonClicked.onClick(self.money)
                 #print('hey man', type)
                 if not type:
