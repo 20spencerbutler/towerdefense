@@ -52,7 +52,7 @@ class Tower:
             elif self.targetType == "FIRST":
                 vectorToEnemy = [orderedEnemyArray[len(orderedEnemyArray)-1].rect.centerx - self.location[0], orderedEnemyArray[len(orderedEnemyArray)-1].rect.centery - self.location[1]]
 
-            print(vectorToEnemy, '----', self.targetType)
+            #print(vectorToEnemy, '----', self.targetType)
             #vectorToEnemy = (500, 0)
             returndict = {
                 "canFire": False,
