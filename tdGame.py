@@ -203,4 +203,3 @@ class Game():
         #print('hey lol', self.useNodes)
         en = self.enemyProps[eI]
         self.enemies.add(Enemy(en['appearance'], en['animTime'], en['speed'], en['hp'], pygame.Rect(self.useNodes[0][0], self.useNodes[0][1], 50, 50), self.useNodes, en['bounty']))
-
