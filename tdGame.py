@@ -143,6 +143,9 @@ class Game():
         if inter == 0:
             self.spawnEnemy(0)
 
+        #print(self.lives)
+        if(self.lives < 1):
+            return 'lost!'
         return dispNow
 
     def handleClick(self, position):
