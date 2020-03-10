@@ -17,15 +17,15 @@ basicTowerShop = Shop([
 towerProps = (
     {
         'cost': 20,
-        'name': 'Tower Chungus',
-        'desc': 'Chungus Tower',
+        'name': 'Cannon Tower',
+        'desc': 'Cannon Tower',
         'range': 100,
-        'appearance': pygame.image.load('Tiles/firsttower.png'),
-        'fireRate': 20,
+        'appearance': pygame.image.load('Tiles/cannon.png'),
+        'fireRate': 100,
         'projectile': {
             'damage': 10,
             'appearance': [pygame.image.load('Tiles/hadouken.png')],
-            'speed': 30,
+            'speed': 6,
             'effects': {'slow': 30, 'aoe': 5}
         },
         'shop': basicTowerShop
@@ -36,11 +36,11 @@ towerProps = (
         'desc': 'Chungus Tower',
         'range': 100,
         'appearance': pygame.image.load('Tiles/firsttower.png'),
-        'fireRate': 20,
+        'fireRate': 100,
         'projectile': {
             'damage': 10,
             'appearance': [pygame.image.load('Tiles/hadouken.png')],
-            'speed': 30,
+            'speed': 6,
             'effects': False
         },
         'shop': basicTowerShop
@@ -51,14 +51,14 @@ enemyProps = (
     {
         'appearance': pygame.image.load('Tiles/antsprite 1.png'),
         'animTime': 0,
-        'speed': 10,
+        'speed': 2,
         'hp': 10,
         'bounty': 5
     },
     {
         'appearance': pygame.image.load('Tiles/spidersprite.png'),
         'animTime': 0,
-        'speed': 10,
+        'speed': 2,
         'hp': 50,
         'bounty': 20
     }
@@ -76,7 +76,7 @@ def main():
     global WINDOWWIDTH, WINDOWHEIGHT, DISPLAYSURF, ISGAME
     WINDOWWIDTH = 1000
     WINDOWHEIGHT = 1000
-    FPS = 8
+    FPS = 40
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), RESIZABLE)
     ISGAME = False
