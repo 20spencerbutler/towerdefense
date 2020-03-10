@@ -51,6 +51,7 @@ class Game():
         self.printer = writerMine('')
         self.towerProps = tp
         self.enemyProps = ep
+        self.range = True
         rawNodes = self.map.nodes
         self.useNodes = []
         for i in rawNodes:
@@ -71,6 +72,7 @@ class Game():
 
 
     def gameTick(self, mousePos):
+
         #print('heyyya! gametick!')
         mx, my = mousePos[0], mousePos[1]
         dispNow = pygame.Surface((1000, 1000))
@@ -142,6 +144,14 @@ class Game():
         inter = random.randint(0, 40)
         if inter == 0:
             self.spawnEnemy(0)
+
+        for tower in range(0, len(self.towers)):
+            if isBounded(self.towers[tower].location[0], mx, self.towers[tower].location[0] + 50) and isBounded(
+                    self.towers[tower].location[1], my, self.towers[tower].location[1] + 50):
+                if self.range == True:
+                    pygame.draw.circle(dispNow, (255, 0, 0), (
+                    int(self.towers[tower].location[0]) + 15, int(self.towers[tower].location[1]) + 15),
+                                       self.towers[tower].range, 1)
 
         #print(self.lives)
         if(self.lives < 1):
