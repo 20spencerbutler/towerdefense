@@ -203,7 +203,7 @@ class Game():
                 return
 
         if self.buyingTower and isBounded(0, x, self.menuBoundary) and isBounded(0, y, self.menuBoundary):
-            print(x, self.menuBoundary, y)
+            #print(x, self.menuBoundary, y)
             self.buildTower(self.towerBuying, (x, y))
 
         self.buyingTower = False
