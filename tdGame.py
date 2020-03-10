@@ -142,9 +142,9 @@ class Game():
             if(buttonHovered):
                 currentHoverSurface = buttonHovered.getDescription()
         dispNow.blit(self.bottomMenu(currentHoverSurface), (0, self.menuBoundary))
-        inter = random.randint(0, 40)
-        if inter == 0:
-            self.spawnEnemy(0)
+        # inter = random.randint(0, 40)
+        # if inter == 0:
+            # self.spawnEnemy(0)
 
         for tower in range(0, len(self.towers)):
             if isBounded(self.towers[tower].location[0], mx, self.towers[tower].location[0] + 50) and isBounded(
