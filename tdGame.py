@@ -44,6 +44,7 @@ class Game():
         self.projectiles = pygame.sprite.Group()
         self.display = pygame.Surface((1000, 1000))
         self.display.blit(pygame.transform.scale(self.map.getSurface(), (self.menuBoundary, self.menuBoundary)), (0, 0))
+        multiFactor = self.menuBoundary / self.map.getSurface().get_width()
         self.shopNormal = shopDefault
         self.shop = self.shopNormal
         self.towerShopOpen = -1
@@ -60,7 +61,7 @@ class Game():
             vals = aNumber.findall(teste)
             if len(vals) < 2:
                 next()
-            self.useNodes.append((int(vals[0]) * 30, int(vals[1]) * 30))
+            self.useNodes.append((int(vals[0]) * 30 * multiFactor, int(vals[1]) * 30 * multiFactor))
 
 
     def bottomMenu(self, hoverSurface = False):
