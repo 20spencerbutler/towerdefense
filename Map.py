@@ -9,7 +9,7 @@ class Map():
         with open(_nodes) as nodesOne:
             linesTwo = [line.split() for line in nodesOne]
             
-        self.display = pygame.Surface((800, 600))
+        self.display = pygame.Surface((600, 600))
         self.tileMap = []
         tileSize = 30
         for x in range(len(linesOne)):

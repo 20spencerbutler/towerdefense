@@ -156,6 +156,13 @@ class Game():
         #print(self.lives)
         if(self.lives < 1):
             return 'lost!'
+        
+        for tower in range(0, len(self.towers)):
+            if isBounded(self.towers[tower].location[0], mx, self.towers[tower].location[0] + 50) and isBounded(self.towers[tower].location[1], my, self.towers[tower].location[1] + 50):
+                if self.range == True:
+                    pygame.draw.circle(dispNow, (255, 0, 0), (int(self.towers[tower].location[0])+15, int(self.towers[tower].location[1])+15), self.towers[tower].range, 1)
+
+        
         return dispNow
 
     def handleClick(self, position):
@@ -195,7 +202,8 @@ class Game():
 
                 return
 
-        if self.buyingTower:
+        if self.buyingTower and isBounded(0, x, self.menuBoundary) and isBounded(0, y, self.menuBoundary):
+            print(x, self.menuBoundary, y)
             self.buildTower(self.towerBuying, (x, y))
 
         self.buyingTower = False
