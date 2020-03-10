@@ -65,8 +65,8 @@ class Game():
 
     def bottomMenu(self, hoverSurface = False):
         menuSurf = pygame.Surface((1000 - self.menuBoundary, self.menuBoundary))
-        menuSurf.blit(self.printer.write(20, self.money), (50, 50))
-        menuSurf.blit(self.printer.write(20, self.lives), (550, 50))
+        menuSurf.blit(self.printer.write(30, 'Money: ' + str(self.money)), (50, 50))
+        menuSurf.blit(self.printer.write(30, 'Lives: ' + str(self.lives)), (50, 75))
         if(hoverSurface): menuSurf.blit(hoverSurface, (600, 1000 - self.menuBoundary))
         return menuSurf
 
