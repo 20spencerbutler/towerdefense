@@ -1,13 +1,14 @@
-import pygame, sys
+import pygame, sys, random, time
 from pygame.locals import *
 from ShopButton import ShopButton
 from Shop import Shop
 from tdGame import Game
 from Menu import Menu
+from Map import Map
 #pygame.init()
 
 basicTowerShop = Shop([
-    ShopButton(0, 'Sell', 'Sells Tower', ('Sell', False)),
+    ShopButton(0, 'Sell', 'Sells Tower', ('Sell')),
     ShopButton(0, 'Target First', 'Targets First Enemy', ('retarget', 0)),
     ShopButton(0, 'Target Last', 'Targets Last Enemy', ('retarget', 1)),
     ShopButton(0, 'Target Closest', 'Targets Closest Enemy', ('retarget', 2))
@@ -16,30 +17,30 @@ basicTowerShop = Shop([
 towerProps = (
     {
         'cost': 20,
-        'name': 'Cannon',
-        'desc': 'Splash damage tower',
+        'name': 'Tower Chungus',
+        'desc': 'Chungus Tower',
         'range': 100,
-        'appearance': pygame.image.load('Tiles/cannon.png'),
-        'fireRate': 100,
+        'appearance': pygame.image.load('Tiles/firsttower.png'),
+        'fireRate': 20,
         'projectile': {
             'damage': 10,
             'appearance': [pygame.image.load('Tiles/hadouken.png')],
-            'speed': 6,
+            'speed': 30,
             'effects': {'slow': 30, 'aoe': 5}
         },
         'shop': basicTowerShop
     },
     {
         'cost': 20,
-        'name': 'Basic tower',
-        'desc': 'Basic 1 shot tower',
+        'name': 'Tower Chungus',
+        'desc': 'Chungus Tower',
         'range': 100,
         'appearance': pygame.image.load('Tiles/firsttower.png'),
-        'fireRate': 100,
+        'fireRate': 20,
         'projectile': {
             'damage': 10,
             'appearance': [pygame.image.load('Tiles/hadouken.png')],
-            'speed': 6,
+            'speed': 30,
             'effects': False
         },
         'shop': basicTowerShop
@@ -48,18 +49,18 @@ towerProps = (
 
 enemyProps = (
     {
-        'appearance': pygame.image.load('Tiles/spidersprite.png'),
+        'appearance': pygame.image.load('Tiles/antsprite 1.png'),
         'animTime': 0,
-        'speed': 2,
+        'speed': 10,
         'hp': 10,
         'bounty': 5
     },
     {
         'appearance': pygame.image.load('Tiles/spidersprite.png'),
         'animTime': 0,
-        'speed': 2,
-        'hp': 10,
-        'bounty': 5
+        'speed': 10,
+        'hp': 50,
+        'bounty': 20
     }
 )
 
@@ -71,24 +72,25 @@ for i in range(0, len(towerProps)):
 
 mainShop = Shop(shopButtons)
 
-bigFont = pygame.font.SysFont('Comic Sans MS', 50)
-
 def main():
-    global WINDOWWIDTH, WINDOWHEIGHT, DISPLAYSURF, ISGAME, bigFont
+    global WINDOWWIDTH, WINDOWHEIGHT, DISPLAYSURF, ISGAME
     WINDOWWIDTH = 1000
     WINDOWHEIGHT = 1000
-    FPS = 40
+    FPS = 8
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), RESIZABLE)
     ISGAME = False
-    hasLost = False
     mousepos = None
     runningGame = None
     gameMenu = Menu()
     isClick = False
+
+    counterPostA = 0
+
     while True:
+        if runningGame is not None:
+            counterPostA += 1
         FPSCLOCK.tick(FPS)
-        #print(ISGAME)
         pygame.display.update()
         isClick = False
         for event in pygame.event.get():
@@ -108,16 +110,7 @@ def main():
             dispLastTick = runningGame.gameTick(mousepos)
             if mousepos[0] >= 0 and mousepos[0] <= 1000 and mousepos[1] >= 0 and mousepos[1] <= 1000 and isClick:
                 runningGame.handleClick(mousepos)
-            if dispLastTick == 'lost!':
-                drawSurface(bigFont.render('You lose!!', True, (255, 255, 255)))
-                ISGAME = False
-                hasLost = True
-            else:
-                drawSurface(dispLastTick)
-        elif(hasLost):
-            drawSurface(bigFont.render('You lose!!', True, (255, 255, 255)))
-            if isClick:
-                hasLost = False
+            drawSurface(dispLastTick)
         else:
             mousepos = gameClick(mousepos)
             if mousepos[0] >= 0 and mousepos[0] <= 1000 and mousepos[1] >= 0 and mousepos[1] <= 1000 and isClick:
@@ -127,6 +120,45 @@ def main():
                     runningGame = Game(gameMenu.mapSelected(mousepos), 10, 100, mainShop, towerProps, enemyProps)
                     ISGAME = True
             drawSurface(gameMenu.display)
+
+        # STUFF DEALING WITH ENEMY WAVES
+        # 50 tick gaps of no enemies
+        # With each new wave, wave lasts 20 ticks longer
+        # With each new wave, gap between waves lasts 20 ticks longer
+        # Enemies spawn faster and stronger at various intervals
+        if runningGame is not None:
+            enemyList = [0, 1]
+
+            if counterPostA % 10 == 0 and counterPostA <= 30: # 30, 50
+                runningGame.spawnEnemy(enemyList[0])
+
+            if counterPostA % 10 == 0 and 80 < counterPostA <= 130: # 50, 70
+                temp2 = None
+                temp = random.randint(0, 10)
+                if temp >= 2:
+                    temp2 = enemyList[0]
+                elif temp < 2:
+                    temp2 = enemyList[1]
+                runningGame.spawnEnemy(temp2)
+
+            if counterPostA % 10 == 0 and 200 < counterPostA <= 270: # 70, 90
+                temp2 = None
+                temp = random.randint(0, 10)
+                if temp >= 5:
+                    temp2 = enemyList[0]
+                elif temp < 5:
+                    temp2 = enemyList[1]
+                runningGame.spawnEnemy(temp2)
+
+            if counterPostA % 5 == 0 and 360 < counterPostA: # 90, 110
+                temp2 = None
+                temp = random.randint(0, 10)
+                if temp >= 2:
+                    temp2 = enemyList[0]
+                elif temp < 2:
+                    temp2 = enemyList[1]
+                runningGame.spawnEnemy(temp2)
+
 
 def drawSurface(drawSurf):
 

@@ -44,6 +44,7 @@ class Game():
         self.projectiles = pygame.sprite.Group()
         self.display = pygame.Surface((1000, 1000))
         self.display.blit(pygame.transform.scale(self.map.getSurface(), (self.menuBoundary, self.menuBoundary)), (0, 0))
+        multiFactor = self.menuBoundary / self.map.getSurface().get_width()
         self.shopNormal = shopDefault
         self.shop = self.shopNormal
         self.towerShopOpen = -1
@@ -60,13 +61,13 @@ class Game():
             vals = aNumber.findall(teste)
             if len(vals) < 2:
                 next()
-            self.useNodes.append((int(vals[0]) * 30, int(vals[1]) * 30))
+            self.useNodes.append((int(vals[0]) * 30 * multiFactor, int(vals[1]) * 30 * multiFactor))
 
 
     def bottomMenu(self, hoverSurface = False):
         menuSurf = pygame.Surface((1000 - self.menuBoundary, self.menuBoundary))
-        menuSurf.blit(self.printer.write(20, self.money), (50, 50))
-        menuSurf.blit(self.printer.write(20, self.lives), (550, 50))
+        menuSurf.blit(self.printer.write(30, 'Money: ' + str(self.money)), (50, 50))
+        menuSurf.blit(self.printer.write(30, 'Lives: ' + str(self.lives)), (50, 75))
         if(hoverSurface): menuSurf.blit(hoverSurface, (600, 1000 - self.menuBoundary))
         return menuSurf
 
@@ -141,9 +142,9 @@ class Game():
             if(buttonHovered):
                 currentHoverSurface = buttonHovered.getDescription()
         dispNow.blit(self.bottomMenu(currentHoverSurface), (0, self.menuBoundary))
-        inter = random.randint(0, 40)
-        if inter == 0:
-            self.spawnEnemy(0)
+        # inter = random.randint(0, 40)
+        # if inter == 0:
+            # self.spawnEnemy(0)
 
         for tower in range(0, len(self.towers)):
             if isBounded(self.towers[tower].location[0], mx, self.towers[tower].location[0] + 50) and isBounded(
@@ -203,7 +204,7 @@ class Game():
                 return
 
         if self.buyingTower and isBounded(0, x, self.menuBoundary) and isBounded(0, y, self.menuBoundary):
-            print(x, self.menuBoundary, y)
+            #print(x, self.menuBoundary, y)
             self.buildTower(self.towerBuying, (x, y))
 
         self.buyingTower = False
