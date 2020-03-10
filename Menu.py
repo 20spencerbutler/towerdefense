@@ -38,8 +38,29 @@ class Menu():
         map1 = "BloonsMapOne.txt"
         self.mapArr.append(map1)
 
+        map2 = "Map Folder/Map2.txt"
+        self.mapArr.append(map2)
+        map3 = "Map Folder/Map3.txt"
+        self.mapArr.append(map3)
+        map4 = "Map Folder/Map4.txt"
+        self.mapArr.append(map4)
+        map5 = "Map Folder/Map5.txt"
+        self.mapArr.append(map5)
+        map6 = "Map Folder/Map6.txt"
+        self.mapArr.append(map6)
+
         nodes1 = "BloonsNodesOne.txt"
         self.nodeArr.append(nodes1)
+        nodes2 = "Map Folder/Nodes2.txt"
+        self.nodeArr.append(nodes2)
+        nodes3 = "Map Folder/Nodes3.txt"
+        self.nodeArr.append(nodes3)
+        nodes4 = "Map Folder/Nodes4.txt"
+        self.nodeArr.append(nodes4)
+        nodes5 = "Map Folder/Nodes5.txt"
+        self.nodeArr.append(nodes5)
+        nodes6 = "Map Folder/Nodes6.txt"
+        self.nodeArr.append(nodes6)
 
         counter = 0
         counter_limit = len(self.mapArr)
