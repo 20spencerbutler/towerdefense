@@ -36,10 +36,11 @@ class Shop():
                 self.mainButtonsPos.append(coordinate)
             else:
                 self.surface.blit(x.getIcon(), (105, yPos))
-                #yPos += 65
                 odd = True
                 coordinate = [105, yPos]
                 self.mainButtonsPos.append(coordinate)
+                yPos += 65
+
 
         odd = True
         yPos = 540
@@ -52,10 +53,11 @@ class Shop():
                 self.otherButtonsPos.append(coordinate)
             else:
                 self.surface.blit(y.getIcon(), (105, yPos))
-                yPos -= 65
                 odd = True
                 coordinate = [105, yPos]
                 self.otherButtonsPos.append(coordinate)
+                yPos -= 65
+
 
     def click(self, coordinates):
         i = 0

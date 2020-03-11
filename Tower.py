@@ -25,6 +25,7 @@ class Tower:
             #print('heyyyyy', nearbyEnemies)
             canFire = True
         if not len(nearbyEnemies) == 0:
+            #print(self.targetType)
             self.fireCooldown = self.fireRate
             mostCloseEnemy = None
             closeEnemyDistance = 1000000000
@@ -82,3 +83,4 @@ class Tower:
 
     def retarget(self, type):
         self.targetType = targetDict[type]
+        #print('ret', type, targetDict[type])

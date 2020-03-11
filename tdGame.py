@@ -203,6 +203,8 @@ class Game():
 
                 if type[0] == 'retarget':
                     self.towers[self.towerShopOpen].retarget(type[1])
+                    self.shop = self.shopNormal
+                    self.towerShopOpen = -1
 
                 return
 
