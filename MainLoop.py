@@ -61,7 +61,23 @@ enemyProps = (
         'speed': 2,
         'hp': 50,
         'bounty': 20
+    },
+    {
+        'appearance': pygame.image.load('Tiles/waspsprite.png'),
+        'animTime': 0,
+        'speed': 6,
+        'hp': 30,
+        'bounty': 50
+    },
+    {
+        'appearance': pygame.image.load('Tiles/pixil-frame-0.png'),
+        'animTime': 0,
+        'speed': 0.5,
+        'hp': 1500,
+        'bounty': 100
     }
+
+
 )
 
 shopButtons = []
