@@ -1,4 +1,8 @@
-import copy
+targetDict = {
+    0: 'FIRST',
+    1: 'LAST',
+    2: 'CLOSE'
+}
 
 class Tower:
 
@@ -12,7 +16,7 @@ class Tower:
         self.targetType = "FIRST"
         self.fireCooldown = 0
 
-    def update(self, nearbyEnemies, targetingType):
+    def update(self, nearbyEnemies):
         # if(len(nearbyEnemies) != 0):
         #     print(nearbyEnemies)
         canFire = False
@@ -21,9 +25,8 @@ class Tower:
             #print('heyyyyy', nearbyEnemies)
             canFire = True
         if not len(nearbyEnemies) == 0:
+            #print(self.targetType)
             self.fireCooldown = self.fireRate
-            if targetingType:
-                self.targetType = targetingType
             mostCloseEnemy = None
             closeEnemyDistance = 1000000000
             orderedEnemyArray = []
@@ -77,3 +80,7 @@ class Tower:
 
     def upgrade(self):
         print("upgrade")
+
+    def retarget(self, type):
+        self.targetType = targetDict[type]
+        #print('ret', type, targetDict[type])

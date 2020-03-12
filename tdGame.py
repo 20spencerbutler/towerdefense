@@ -88,7 +88,7 @@ class Game():
                 enemiesInRange = pygame.sprite.spritecollide(rangeSprite, self.enemies,
                                                              False, pygame.sprite.collide_circle
                                                              )
-            retNow = self.towers[tower].update(enemiesInRange, False)
+            retNow = self.towers[tower].update(enemiesInRange)
             self.towerCanFire[tower] = retNow['canFire']
             if retNow['shotFired']:
                 #print('heyyyy')
@@ -200,6 +200,11 @@ class Game():
                     self.buyingTower = True
                     self.rangeOfBuying = s['range']
                     self.towerBuying = type[1]
+
+                if type[0] == 'retarget':
+                    self.towers[self.towerShopOpen].retarget(type[1])
+                    self.shop = self.shopNormal
+                    self.towerShopOpen = -1
 
                 return
 

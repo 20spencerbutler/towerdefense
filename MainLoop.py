@@ -8,7 +8,7 @@ from Map import Map
 #pygame.init()
 
 basicTowerShop = Shop([
-    ShopButton(0, 'Sell', 'Sells Tower', ('Sell')),
+    ShopButton(0, 'Sell', 'Sells Tower', ('Sell', False)),
     ShopButton(0, 'Target First', 'Targets First Enemy', ('retarget', 0)),
     ShopButton(0, 'Target Last', 'Targets Last Enemy', ('retarget', 1)),
     ShopButton(0, 'Target Closest', 'Targets Closest Enemy', ('retarget', 2))
@@ -88,14 +88,17 @@ for i in range(0, len(towerProps)):
 
 mainShop = Shop(shopButtons)
 
+bigFont = pygame.font.SysFont('Comic Sans MS', 50)
+
 def main():
-    global WINDOWWIDTH, WINDOWHEIGHT, DISPLAYSURF, ISGAME
+    global WINDOWWIDTH, WINDOWHEIGHT, DISPLAYSURF, ISGAME, BIGFONT
     WINDOWWIDTH = 1000
     WINDOWHEIGHT = 1000
     FPS = 40
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), RESIZABLE)
     ISGAME = False
+    hasLost = False
     mousepos = None
     runningGame = None
     gameMenu = Menu()
@@ -126,14 +129,24 @@ def main():
             dispLastTick = runningGame.gameTick(mousepos)
             if mousepos[0] >= 0 and mousepos[0] <= 1000 and mousepos[1] >= 0 and mousepos[1] <= 1000 and isClick:
                 runningGame.handleClick(mousepos)
-            drawSurface(dispLastTick)
+            if dispLastTick == 'lost!':
+                drawSurface(bigFont.render('You lose!!', True, (255, 255, 255)))
+                ISGAME = False
+                hasLost = True
+            else:
+                drawSurface(dispLastTick)
+        elif (hasLost):
+            drawSurface(bigFont.render('You lose!!', True, (255, 255, 255)))
+            if isClick:
+                hasLost = False
+            #drawSurface(dispLastTick)
         else:
             mousepos = gameClick(mousepos)
             if mousepos[0] >= 0 and mousepos[0] <= 1000 and mousepos[1] >= 0 and mousepos[1] <= 1000 and isClick:
                 #print('ooy')
                 if gameMenu.mapSelected(mousepos):
                     #print('HYEYEEY')
-                    runningGame = Game(gameMenu.mapSelected(mousepos), 10, 100, mainShop, towerProps, enemyProps)
+                    runningGame = Game(gameMenu.mapSelected(mousepos), 1000, 100, mainShop, towerProps, enemyProps)
                     ISGAME = True
             drawSurface(gameMenu.display)
 
