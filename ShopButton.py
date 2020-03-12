@@ -55,6 +55,9 @@ class ShopButton():
             yPos += 10
             self.icon.blit(textSurf, textRect)
 
+        self.storeIcon = pygame.Surface((60, 60))
+        self.storeIcon.blit(self.icon, (0, 0))
+
     def onClick(self, bank):
         if bank < self.cost:
             return False
@@ -70,15 +73,18 @@ class ShopButton():
     def getType(self):
         return self.type
 
-    def switchClick(self):
-        if self.clicked == True:
-            self.clicked = False
-        elif self.clicked == False:
-            self.clicked = True
-            pygame.draw.line(self.icon, WHITE, (0, 0), (0, 60), 3)
-            pygame.draw.line(self.icon, WHITE, (0, 0), (60, 0), 3)
-            pygame.draw.line(self.icon, WHITE, (60, 0), (60, 60), 3)
-            pygame.draw.line(self.icon, WHITE, (0, 60), (60, 60), 3)
+    def offClick(self):
+        #print(self.type)
+        self.clicked = False
+        self.icon.blit(self.storeIcon, (0, 0))
+
+    def doClick(self):
+        #print('onClicked', self.type)
+        self.clicked = True
+        pygame.draw.line(self.icon, WHITE, (0, 0), (0, 60), 5)
+        pygame.draw.line(self.icon, WHITE, (0, 0), (60, 0), 5)
+        pygame.draw.line(self.icon, WHITE, (60, 0), (60, 60), 5)
+        pygame.draw.line(self.icon, WHITE, (0, 60), (60, 60), 5)
 
 def makeText(text, color, bgcolor, top, left, font):
     textSurf = font.render(text, True, color, bgcolor)
@@ -86,5 +92,5 @@ def makeText(text, color, bgcolor, top, left, font):
     textRect.topleft = (top, left)
     return (textSurf, textRect)
 
-button = ShopButton(220, "Blaster", "The blaster blasts things", ["Buy", "Attack Tower"])
-button.switchClick()
+#button = ShopButton(220, "Blaster", "The blaster blasts things", ["Buy", "Attack Tower"])
+#button.switchClick()

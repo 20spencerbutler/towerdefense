@@ -53,6 +53,7 @@ class Game():
         self.towerProps = tp
         self.enemyProps = ep
         self.range = True
+        self.butStore = False
         rawNodes = self.map.nodes
         self.useNodes = []
         for i in rawNodes:
@@ -170,6 +171,9 @@ class Game():
 
     def handleClick(self, position):
         x, y = position[0], position[1]
+        if(self.butStore):
+            self.butStore.offClick()
+            self.butStore = False
         for tower in range(0, len(self.towers)):
             if isBounded(self.towers[tower].location[0], x, self.towers[tower].location[0] + 50) and isBounded(self.towers[tower].location[1], y, self.towers[tower].location[1] + 50):
                 self.shop = self.towers[tower].shop
@@ -180,8 +184,8 @@ class Game():
             #print(x - self.menuBoundary, y)
             buttonClicked = self.shop.click((x - self.menuBoundary, y))
             if buttonClicked:
-                buttonClicked.switchClick()
-                pygame.display.update()
+                #buttonClicked.switchClick()
+                #pygame.display.update()
                 type = buttonClicked.onClick(self.money)
                 #print('hey man', type)
                 if not type:
@@ -198,6 +202,8 @@ class Game():
 
                 if type[0] == 'Buy':
                     #print('buyin')
+                    buttonClicked.doClick()
+                    self.butStore = buttonClicked
                     s = self.towerProps[type[1]]
                     self.buyingTower = True
                     self.rangeOfBuying = s['range']
@@ -227,6 +233,8 @@ class Game():
                   (loc[0], loc[1]), s['shop']))
         self.money -= s['cost']
         self.towerCanFire.append(False)
+        #self.butStore.switchClick()
+        #self.butStore = False
 
     def spawnEnemy(self, eI, doIt = True):
         #print('hey lol', self.useNodes)

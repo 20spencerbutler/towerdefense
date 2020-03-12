@@ -25,6 +25,28 @@ class Shop():
                 self.otherButtons.append(i)
 
         self.surface.fill(GRAY)
+
+
+    def click(self, coordinates):
+        i = 0
+        #print(coordinates)
+        for x in self.mainButtonsPos:
+            #print(x)
+            if x[0] <= coordinates[0] < x[0] + 60:
+                #print('hey')
+                if x[1] <= coordinates[1] < x[1] + 60:
+                    return self.mainButtons[i]
+            i += 1
+        j = 0
+        for y in self.otherButtonsPos:
+            if y[0] <= coordinates[0] < y[0] + 60 and y[1] <= coordinates[1] < y[1] + 60:
+                return self.otherButtons[j]
+            j += 1
+        #print(coordinates, self.mainButtonsPos)
+        return False
+
+    def getSurface(self):
+        #print('surface gotteing')
         yPos = 0
         odd = True
 
@@ -58,25 +80,5 @@ class Shop():
                 self.otherButtonsPos.append(coordinate)
                 yPos -= 65
 
-
-    def click(self, coordinates):
-        i = 0
-        #print(coordinates)
-        for x in self.mainButtonsPos:
-            #print(x)
-            if x[0] <= coordinates[0] < x[0] + 60:
-                #print('hey')
-                if x[1] <= coordinates[1] < x[1] + 60:
-                    return self.mainButtons[i]
-            i += 1
-        j = 0
-        for y in self.otherButtonsPos:
-            if y[0] <= coordinates[0] < y[0] + 60 and y[1] <= coordinates[1] < y[1] + 60:
-                return self.otherButtons[j]
-            j += 1
-        #print(coordinates, self.mainButtonsPos)
-        return False
-
-    def getSurface(self):
         return self.surface
 
