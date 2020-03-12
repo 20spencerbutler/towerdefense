@@ -19,6 +19,7 @@ class Enemy(pygame.sprite.Sprite):
         self.distanceToNode = 0
         self.moveVector = []
         self.bounty = _bounty
+        self.partialSpeed = 0
 
 
     def takeDamage(self, damageNum, effectArray):
@@ -38,6 +39,13 @@ class Enemy(pygame.sprite.Sprite):
         return False
 
     def update(self):
+        hasPartialed = 0
+        if(self.partialSpeed >= 1):
+            hasPartialed = math.floor(self.partialSpeed)
+            self.speed += hasPartialed
+            self.partialSpeed -= hasPartialed
+            #print(hasPartialed, '))))')
+        #print(hasPartialed, '(((((')
         if self.distanceToNode - self.speed <= 0:
             #print('t')
             if self.currentNodeIndex < len(self.nodeArray) - 1:
@@ -46,13 +54,20 @@ class Enemy(pygame.sprite.Sprite):
                 self.distanceToNode = (((self.nodeArray[self.currentNodeIndex][0] - self.nodeArray[self.currentNodeIndex + 1][0]) ** 2) + ((self.nodeArray[self.currentNodeIndex][1] - self.nodeArray[self.currentNodeIndex + 1][1]) ** 2)) ** 0.5
                 self.moveVector = [(self.nodeArray[self.currentNodeIndex + 1][0] - self.nodeArray[self.currentNodeIndex][0]) / self.distanceToNode, (self.nodeArray[self.currentNodeIndex + 1][1] - self.nodeArray[self.currentNodeIndex][1]) / self.distanceToNode]
                 self.currentNodeIndex += 1
+                self.speed -= hasPartialed
                 return False
             else:
+                self.speed -= hasPartialed
                 return True
         else:
             self.rect.move_ip(self.speed * self.moveVector[0], self.speed * self.moveVector[1])
-            self.distanceToNode -= math.sqrt(math.floor(self.speed * self.moveVector[0]) ** 2 + math.floor(self.speed * self.moveVector[1]) ** 2)
+            distMoved = math.sqrt(math.floor(self.speed * self.moveVector[0]) ** 2 + math.floor(self.speed * self.moveVector[1]) ** 2)
+            self.distanceToNode -= distMoved
+            self.partialSpeed += self.speed - distMoved
+            #print(self.partialSpeed, self.speed)
+            self.speed -= hasPartialed
             return False
+
 
 
 

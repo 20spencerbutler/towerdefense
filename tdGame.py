@@ -63,6 +63,8 @@ class Game():
                 next()
             self.useNodes.append((int(vals[0]) * 30 * multiFactor, int(vals[1]) * 30 * multiFactor))
 
+        #self.spawnEnemy(1, True)
+
 
     def bottomMenu(self, hoverSurface = False):
         menuSurf = pygame.Surface((1000 - self.menuBoundary, self.menuBoundary))
@@ -226,7 +228,9 @@ class Game():
         self.money -= s['cost']
         self.towerCanFire.append(False)
 
-    def spawnEnemy(self, eI):
+    def spawnEnemy(self, eI, doIt = True):
         #print('hey lol', self.useNodes)
+        if not doIt:
+            return False
         en = self.enemyProps[eI]
         self.enemies.add(Enemy(en['appearance'], en['animTime'], en['speed'], en['hp'], pygame.Rect(self.useNodes[0][0], self.useNodes[0][1], 50, 50), self.useNodes, en['bounty']))
