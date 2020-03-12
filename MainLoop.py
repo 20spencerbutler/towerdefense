@@ -109,7 +109,7 @@ def main():
     while True:
         if runningGame is not None:
             counterPostA += 1
-        print(counterPostA)
+        #print(counterPostA)
         FPSCLOCK.tick(FPS)
         pygame.display.update()
         isClick = False
