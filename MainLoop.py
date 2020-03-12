@@ -109,6 +109,7 @@ def main():
     while True:
         if runningGame is not None:
             counterPostA += 1
+        print(counterPostA)
         FPSCLOCK.tick(FPS)
         pygame.display.update()
         isClick = False
@@ -158,10 +159,12 @@ def main():
         if runningGame is not None:
             enemyList = [0, 1]
 
-            if counterPostA % 10 == 0 and counterPostA <= 30: # 30, 50
+            # WAVE 1
+            if counterPostA % 20 == 0 and counterPostA <= 30: # 300, 50 - (wave duration, time between waves)
                 runningGame.spawnEnemy(enemyList[0])
 
-            if counterPostA % 10 == 0 and 80 < counterPostA <= 130: # 50, 70
+            # WAVE 2
+            if counterPostA % 20 == 0 and 330 < counterPostA <= 380: # 320, 70
                 temp2 = None
                 temp = random.randint(0, 10)
                 if temp >= 2:
@@ -170,7 +173,8 @@ def main():
                     temp2 = enemyList[1]
                 runningGame.spawnEnemy(temp2)
 
-            if counterPostA % 10 == 0 and 200 < counterPostA <= 270: # 70, 90
+            # WAVE 3
+            if counterPostA % 20 == 0 and 700 < counterPostA <= 770: # 340, 90
                 temp2 = None
                 temp = random.randint(0, 10)
                 if temp >= 5:
@@ -179,7 +183,8 @@ def main():
                     temp2 = enemyList[1]
                 runningGame.spawnEnemy(temp2)
 
-            if counterPostA % 5 == 0 and 360 < counterPostA: # 90, 110
+            # WAVE 4
+            if counterPostA % 10 == 0 and 1040 < counterPostA <= 1130: # 360, 110
                 temp2 = None
                 temp = random.randint(0, 10)
                 if temp >= 2:
@@ -188,6 +193,65 @@ def main():
                     temp2 = enemyList[1]
                 runningGame.spawnEnemy(temp2)
 
+            # WAVE 5
+            if counterPostA % 10 == 0 and 1400 < counterPostA <= 1510: # 380, 130
+                temp2 = None
+                temp = random.randint(0, 10)
+                if temp >= 5:
+                    temp2 = enemyList[0]
+                elif temp < 5:
+                    temp2 = enemyList[1]
+                runningGame.spawnEnemy(temp2)
+
+            # WAVE 6
+            if counterPostA % 10 == 0 and 1890 < counterPostA <= 2020: # 400, 150
+                temp2 = None
+                temp = random.randint(0, 10)
+                if temp >= 8:
+                    temp2 = enemyList[0]
+                elif temp < 8:
+                    temp2 = enemyList[1]
+                runningGame.spawnEnemy(temp2)
+
+            # WAVE 7
+            if counterPostA % 10 == 0 and 2420 < counterPostA <= 2570: # 420, 170
+                temp2 = enemyList[1]
+                runningGame.spawnEnemy(temp2)
+
+            # WAVE 8
+            if counterPostA % 5 == 0 and 2990 < counterPostA <= 3160: # 440, 190
+                temp2 = None
+                temp = random.randint(0, 10)
+                if temp >= 5:
+                    temp2 = enemyList[0]
+                elif temp < 5:
+                    temp2 = enemyList[1]
+                runningGame.spawnEnemy(temp2)
+
+            # WAVE 9
+            if counterPostA % 5 == 0 and 3600 < counterPostA <= 3790: # 460, 210
+                temp2 = None
+                temp = random.randint(0, 10)
+                if temp >= 8:
+                    temp2 = enemyList[0]
+                elif temp < 8:
+                    temp2 = enemyList[1]
+                runningGame.spawnEnemy(temp2)
+
+            # WAVE 10
+            if counterPostA % 5 == 0 and 4250 < counterPostA <= 4460:  # 480, 230
+                temp2 = None
+                temp = random.randint(0, 10)
+                if temp >= 8:
+                        temp2 = enemyList[0]
+                elif temp < 8:
+                    temp2 = enemyList[1]
+                runningGame.spawnEnemy(temp2)
+
+            # WAVE 11
+            if counterPostA % 1 == 0 and 4940 < counterPostA:  # 480, 230
+                temp2 = enemyList[1]
+                runningGame.spawnEnemy(temp2)
 
 def drawSurface(drawSurf):
 
