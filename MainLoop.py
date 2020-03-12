@@ -72,8 +72,8 @@ enemyProps = (
     {
         'appearance': pygame.image.load('Tiles/pixil-frame-0.png'),
         'animTime': 0,
-        'speed': 2,
-        'hp': 500,
+        'speed': 0.5,
+        'hp': 1500,
         'bounty': 100
     }
 
